@@ -1,5 +1,5 @@
 [site]
-DefaultTitle  = "我的站点"
+DefaultTitle  = "JKHao"
 DefaultLayout = "shared/layout.html"
 DefaultError  = "shared/error.html"
 
