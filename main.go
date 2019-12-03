@@ -1,14 +1,15 @@
 package main
 
 import (
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/middleware/logger"
-	"github.com/kataras/iris/middleware/recover"
-	config "github.com/spf13/viper"
 	"cms/common"
 	"cms/libs"
 	"cms/model"
 	"cms/route"
+	context "github.com/kataras/iris/context"
+	iris "github.com/kataras/iris"
+	"github.com/kataras/iris/middleware/logger"
+	"github.com/kataras/iris/middleware/recover"
+	config "github.com/spf13/viper"
 	"log"
 	"strconv"
 	"time"
@@ -64,7 +65,6 @@ func main() {
 
 	app.StaticWeb("/public", "./public")   //设置静态文件目录
 	app.StaticWeb("/uploads", "./uploads") //设置静态文件目录
-
 	//设置公共页面输出
 	app.Use(func(ctx iris.Context) {
 		if auth := commons.SessManager.Start(ctx).Get("admin_user"); auth != nil {
