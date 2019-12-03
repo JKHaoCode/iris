@@ -10,9 +10,9 @@ import (
 
 func Routes(app *iris.Application) {
 	//登录路由
-	mvc.New(app.Party("/")).
-		Register(commons.SessManager.Start).
-		Handle(new(controllers.IndexController))
+	mvc.New(app.Party("/")). // 根据请求类型和请求URL自动匹配处理方法 contoller 方法
+					Register(commons.SessManager.Start).
+					Handle(new(controllers.IndexController))
 
 	//登录路由
 	mvc.New(app.Party("/login")).

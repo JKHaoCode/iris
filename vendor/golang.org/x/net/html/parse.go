@@ -2136,6 +2136,7 @@ func parseForeignContent(p *parser) bool {
 			Data: p.tok.Data,
 		})
 	case StartTagToken:
+<<<<<<< HEAD
 		if !p.fragment {
 			b := breakout[p.tok.Data]
 			if p.tok.DataAtom == a.Font {
@@ -2161,6 +2162,30 @@ func parseForeignContent(p *parser) bool {
 		}
 		current := p.adjustedCurrentNode()
 		switch current.Namespace {
+=======
+		b := breakout[p.tok.Data]
+		if p.tok.DataAtom == a.Font {
+		loop:
+			for _, attr := range p.tok.Attr {
+				switch attr.Key {
+				case "color", "face", "size":
+					b = true
+					break loop
+				}
+			}
+		}
+		if b {
+			for i := len(p.oe) - 1; i >= 0; i-- {
+				n := p.oe[i]
+				if n.Namespace == "" || htmlIntegrationPoint(n) || mathMLTextIntegrationPoint(n) {
+					p.oe = p.oe[:i+1]
+					break
+				}
+			}
+			return false
+		}
+		switch p.top().Namespace {
+>>>>>>> 84cc0e631ac37c6968d5e7c03375041232ba3050
 		case "math":
 			adjustAttributeNames(p.tok.Attr, mathMLAttributeAdjustments)
 		case "svg":
@@ -2175,7 +2200,11 @@ func parseForeignContent(p *parser) bool {
 			panic("html: bad parser state: unexpected namespace")
 		}
 		adjustForeignAttributes(p.tok.Attr)
+<<<<<<< HEAD
 		namespace := current.Namespace
+=======
+		namespace := p.top().Namespace
+>>>>>>> 84cc0e631ac37c6968d5e7c03375041232ba3050
 		p.addElement()
 		p.top().Namespace = namespace
 		if namespace != "" {
@@ -2204,6 +2233,7 @@ func parseForeignContent(p *parser) bool {
 	return true
 }
 
+<<<<<<< HEAD
 // Section 12.2.4.2.
 func (p *parser) adjustedCurrentNode() *Node {
 	if len(p.oe) == 1 && p.fragment && p.context != nil {
@@ -2212,12 +2242,18 @@ func (p *parser) adjustedCurrentNode() *Node {
 	return p.oe.top()
 }
 
+=======
+>>>>>>> 84cc0e631ac37c6968d5e7c03375041232ba3050
 // Section 12.2.6.
 func (p *parser) inForeignContent() bool {
 	if len(p.oe) == 0 {
 		return false
 	}
+<<<<<<< HEAD
 	n := p.adjustedCurrentNode()
+=======
+	n := p.oe[len(p.oe)-1]
+>>>>>>> 84cc0e631ac37c6968d5e7c03375041232ba3050
 	if n.Namespace == "" {
 		return false
 	}
@@ -2375,6 +2411,10 @@ func ParseFragmentWithOptions(r io.Reader, context *Node, opts ...ParseOption) (
 		contextTag = context.DataAtom.String()
 	}
 	p := &parser{
+<<<<<<< HEAD
+=======
+		tokenizer: NewTokenizerFragment(r, contextTag),
+>>>>>>> 84cc0e631ac37c6968d5e7c03375041232ba3050
 		doc: &Node{
 			Type: DocumentNode,
 		},
@@ -2382,11 +2422,14 @@ func ParseFragmentWithOptions(r io.Reader, context *Node, opts ...ParseOption) (
 		fragment:  true,
 		context:   context,
 	}
+<<<<<<< HEAD
 	if context != nil && context.Namespace != "" {
 		p.tokenizer = NewTokenizer(r)
 	} else {
 		p.tokenizer = NewTokenizerFragment(r, contextTag)
 	}
+=======
+>>>>>>> 84cc0e631ac37c6968d5e7c03375041232ba3050
 
 	for _, f := range opts {
 		f(p)
