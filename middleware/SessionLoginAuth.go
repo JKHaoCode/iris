@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"cms/common"
+	"github.com/JKHaoCode/iris/commons"
 	"github.com/kataras/iris/context"
 )
 

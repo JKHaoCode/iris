@@ -1,12 +1,12 @@
 package main
 
 import (
-	"cms/common"
-	"cms/libs"
-	"cms/model"
-	"cms/route"
-	context "github.com/kataras/iris/context"
+	"github.com/JKHaoCode/iris/commons"
+	"github.com/JKHaoCode/iris/libs"
+	"github.com/JKHaoCode/iris/model"
+	"github.com/JKHaoCode/iris/route"
 	iris "github.com/kataras/iris"
+	context "github.com/kataras/iris/context"
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
 	config "github.com/spf13/viper"

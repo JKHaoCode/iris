@@ -1,8 +1,8 @@
 package model
 
 import (
-	"cms/libs"
 	"errors"
+	"github.com/JKHaoCode/iris/libs"
 	"github.com/jinzhu/gorm"
 	"strings"
 )

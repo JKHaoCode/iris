@@ -1,9 +1,9 @@
 package route
 
 import (
-	"cms/common"
-	"cms/controller"
-	"cms/middleware"
+	"github.com/JKHaoCode/iris/commons"
+	"github.com/JKHaoCode/iris/controller"
+	"github.com/JKHaoCode/iris/middleware"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
 )

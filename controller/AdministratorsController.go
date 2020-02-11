@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"cms/common"
-	"cms/libs"
-	"cms/model"
+	commons "github.com/JKHaoCode/iris/commons"
+	"github.com/JKHaoCode/iris/libs"
+	"github.com/JKHaoCode/iris/model"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
 	"github.com/kataras/iris/sessions"
