@@ -2,7 +2,7 @@ package main
 
 import (
 	iris "github.com/kataras/iris"
-	context "github.com/kataras/iris/context"
+	// context "github.com/kataras/iris/context"
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
 	config "github.com/spf13/viper"

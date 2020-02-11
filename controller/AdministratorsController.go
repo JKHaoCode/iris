@@ -60,6 +60,7 @@ func (c *AdministratorsController) PostUpdateAdmin() {
 	}
 	var postValues map[string][]string
 	postValues = c.Ctx.FormValues()
+	log.Println(postValues)
 	admin_id := postValues["id"][0]
 	int_admin_id, _ := strconv.Atoi(admin_id)
 	delete(postValues, "id")

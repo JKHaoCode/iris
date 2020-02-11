@@ -18,6 +18,7 @@ if auth := commons.SessManager.Start(Ctx).Get("admin_user"); auth == nil {
 		return
 	}
 */
+
 var SessManager = sessions.New(sessions.Config{
 	Cookie:  config.GetString("site.SessionCoolieName"),
 	Expires: time.Duration(config.GetInt64("SessionExpires")) * time.Hour,

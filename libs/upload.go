@@ -25,6 +25,7 @@ func UploadFile(key string, Ctx iris.Context) (bool, string) {
 
 	var minSize int64 = 0
 	if info.Size > minSize {
+		log.Println(config.GetInt64("UploadSize") * 1024 * 1024)
 		if info.Size > config.GetInt64("UploadSize")*1024*1024 {
 			return false, "Error while uploading: UploadSize ToMax"
 		}
