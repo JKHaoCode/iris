@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	commons "./commons"
-	"./libs"
-	"./model"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
 	"github.com/kataras/iris/sessions"
 	"html"
+	commons "iris/commons"
+	"iris/libs"
+	"iris/model"
 	"runtime"
 	"strings"
 )

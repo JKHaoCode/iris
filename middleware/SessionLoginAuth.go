@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"./commons"
 	"github.com/kataras/iris/context"
+	"iris/commons"
 )
 
 func SessionLoginAuth(Ctx context.Context) {

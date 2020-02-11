@@ -1,11 +1,11 @@
 package route
 
 import (
-	"./commons"
-	"./controller"
-	"./middleware"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
+	"iris/commons"
+	"iris/controller"
+	"iris/middleware"
 )
 
 func Routes(app *iris.Application) {

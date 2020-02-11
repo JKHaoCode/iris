@@ -1,9 +1,9 @@
 package model
 
 import (
-	"./libs"
 	"errors"
 	"github.com/jinzhu/gorm"
+	"iris/libs"
 	"strings"
 )
 

@@ -1,7 +1,6 @@
 package libs
 
 import (
-	"./commons"
 	"context"
 	"fmt"
 	"github.com/kataras/iris"
@@ -9,6 +8,7 @@ import (
 	"github.com/qiniu/api.v7/storage"
 	config "github.com/spf13/viper"
 	"io"
+	"iris/commons"
 	"log"
 	"os"
 	"path"

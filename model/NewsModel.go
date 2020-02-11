@@ -1,10 +1,10 @@
 package model
 
 import (
-	"./libs"
 	"errors"
 	"github.com/jinzhu/gorm"
 	config "github.com/spf13/viper"
+	"iris/libs"
 	"math"
 	"strings"
 )

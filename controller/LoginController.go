@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	commons "./commons"
-	"./model"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
 	"github.com/kataras/iris/sessions"
 	"html"
+	commons "iris/commons"
+	"iris/model"
 	"strings"
 	"sync"
 )
