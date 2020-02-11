@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	commons "github.com/JKHaoCode/iris/commons"
-	"github.com/JKHaoCode/iris/model"
+	commons "./commons"
+	"./model"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"

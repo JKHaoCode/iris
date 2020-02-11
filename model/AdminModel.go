@@ -1,10 +1,10 @@
 package model
 
 import (
+	"./libs"
 	"crypto/md5"
 	"errors"
 	"fmt"
-	"github.com/JKHaoCode/iris/libs"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	config "github.com/spf13/viper"

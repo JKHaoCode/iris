@@ -1,8 +1,8 @@
 package model
 
 import (
+	"./libs"
 	"errors"
-	"github.com/JKHaoCode/iris/libs"
 	"github.com/jinzhu/gorm"
 	config "github.com/spf13/viper"
 	"math"

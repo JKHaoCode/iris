@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/JKHaoCode/iris/commons"
-	"github.com/JKHaoCode/iris/libs"
-	"github.com/JKHaoCode/iris/model"
-	"github.com/JKHaoCode/iris/route"
+	"./commons"
+	"./libs"
+	"./model"
+	"./route"
 	iris "github.com/kataras/iris"
 	context "github.com/kataras/iris/context"
 	"github.com/kataras/iris/middleware/logger"
