@@ -20,7 +20,7 @@ type LoginController struct {
 
 func (c *LoginController) Get() {
 	if auth := commons.SessManager.Start(c.Ctx).Get("admin_user"); auth != nil {
-		c.Ctx.Redirect("/system/main")
+		c.Ctx.Redirect("/backenf/system/main")
 	} else {
 		c.Ctx.Redirect("/login/show")
 	}
@@ -44,7 +44,7 @@ func (c *LoginController) Post() {
 		sessionInfo["id"] = adminInfo.ID
 		sessionInfo["name"] = adminInfo.Account
 		c.Session.Set("admin_user", sessionInfo)
-		c.Ctx.Redirect("/system/main")
+		c.Ctx.Redirect("/backend/system/main")
 	} else {
 		c.Ctx.Redirect("/login/show?err=" + err.Error())
 		//登录失败

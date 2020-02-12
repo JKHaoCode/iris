@@ -20,19 +20,19 @@ func Routes(app *iris.Application) {
 		Handle(new(controllers.LoginController))
 
 	//系统路由
-	mvc.New(app.Party("/system", middleware.SessionLoginAuth)).
+	mvc.New(app.Party("/backend/system", middleware.SessionLoginAuth)).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.SystemController))
 	//管理员管理
-	mvc.New(app.Party("/administrators", middleware.SessionLoginAuth)).
+	mvc.New(app.Party("/backend/administrators", middleware.SessionLoginAuth)).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.AdministratorsController))
 	//分类管理
-	mvc.New(app.Party("/categorys", middleware.SessionLoginAuth)).
+	mvc.New(app.Party("/backend/categorys", middleware.SessionLoginAuth)).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.CategorysController))
 	//内容管理
-	mvc.New(app.Party("/news", middleware.SessionLoginAuth)).
+	mvc.New(app.Party("/backend/news", middleware.SessionLoginAuth)).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.NewsController))
 }

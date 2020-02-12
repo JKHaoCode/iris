@@ -18,7 +18,10 @@ import (
 
 func UploadFile(key string, Ctx iris.Context) (bool, string) {
 	file, info, err := Ctx.FormFile(key)
-	// log.Println(file, info, err)
+	log.Println("file info err is", file, info, err)
+	if file == nil {
+		return true, ""
+	}
 	filePath := ""
 	if err != nil {
 		return false, "Error while uploading: <b>" + err.Error() + "</b>"

@@ -24,7 +24,7 @@
     <header class="main-header">
 
         <a href="#" class="logo">
-            <span class="logo-mini"><b>CMS</b></span>
+            <span class="logo-mini"><b>JKH</b></span>
             <span class="logo-lg"><b>JKHaoCode</b></span>
         </a>
 
@@ -79,15 +79,15 @@
                 </div>
             </div>
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">MAIN NAVIGATION</li>
+                <li class="header" style="text-align: center">菜单栏</li>
                 <li class="">
-                    <a href="/system/main">
+                    <a href="/backend/system/main">
                         <i class="fa fa-dashboard"></i>
                         <span>系统概况</span>
                     </a>
                 </li>
                 <li class="">
-                    <a href="/administrators">
+                    <a href="/backend/administrators">
                         <i class="fa fa-users"></i>
                         <span>管理员</span>
                     </a>
@@ -101,8 +101,8 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class=""><a href="/categorys"><i class="fa fa-circle-o"></i> 分类管理</a></li>
-                        <li><a href="/news"><i class="fa fa-circle-o"></i> 文章管理</a></li>
+                        <li class=""><a href="/backend/categorys"><i class="fa fa-circle-o"></i> 分类管理</a></li>
+                        <li><a href="/backend/news"><i class="fa fa-circle-o"></i> 文章管理</a></li>
                     </ul>
                 </li>
             </ul>
@@ -126,11 +126,11 @@
     </div>
 
     <footer class="main-footer">
-{{/*        <div class="pull-right hidden-xs">*/}}
-{{/*            <b>Version</b> 2.4.0*/}}
-{{/*        </div>*/}}
-{{/*        <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights*/}}
-{{/*        reserved.*/}}
+        <div class="pull-right hidden-xs">
+            <b>Version</b>0.0.1
+        </div>
+        <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+        reserved.
         <p style="text-align: center"> &copy; JKHaoCode</p>
     </footer>
 
@@ -148,4 +148,22 @@
         $('ul.treeview-menu>li').find('a[href="' + window.location.pathname + '"]').closest('li.treeview').addClass('active');
         $('.sidebar-menu>li').find('a[href="' + window.location.pathname + '"]').closest('li').addClass('active');
     })
+    $(function(){
+        // $('.sidebar-menu li:not(.treeview) > a').on('click', function(){
+        //     var $parent = $(this).parent().addClass('active');
+        //     $parent.siblings('.treeview.active').find('> a').trigger('click');
+        //     $parent.siblings().removeClass('active').find('li').removeClass('active');
+        // });
+
+        // 解决菜单不高亮
+        $(window).on('load', function(){
+            $('.sidebar-menu a').each(function(){
+                if(window.location.href.indexOf(this.href) >= 0){
+                    $(this).parent().addClass('active')
+                            .closest('.treeview-menu').addClass('.menu-open')
+                            .closest('.treeview').addClass('active');
+                }
+            });
+        });
+    });
 </script>
