@@ -65,7 +65,7 @@ func main() {
 
 	app.StaticWeb("/public", "./public")   //设置静态文件目录
 	app.StaticWeb("/uploads", "./uploads") //设置静态文件目录
-	//设置公共页面输出
+	// 设置公共页面输出 重点
 	app.Use(func(ctx iris.Context) {
 		if auth := commons.SessManager.Start(ctx).Get("admin_user"); auth != nil {
 			admin_user, _ := auth.(map[string]interface{})

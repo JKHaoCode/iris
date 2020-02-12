@@ -62,9 +62,9 @@ func (c *NewsController) PostAddNews() {
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
+}
 
-func (c *NewsController) Ge}
-tUpdateNewsBy(id uint) mvc.View {
+func (c *NewsController) GetUpdateNewsBy(id uint) mvc.View {
 	NewsInfo, err := c.News.NewsInfo(id)
 	if err != nil {
 		return commons.MvcError(err.Error(), c.Ctx)
