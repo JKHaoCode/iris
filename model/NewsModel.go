@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	config "github.com/spf13/viper"
 	"iris/libs"
+	"log"
 	"math"
 	"strings"
 )
@@ -21,6 +22,7 @@ type News struct {
 }
 
 func (this *News) List(page int) ([]News, int, int) {
+	log.Println(News{})
 	var data = []News{}
 	var totalCount int
 	db := libs.DB
