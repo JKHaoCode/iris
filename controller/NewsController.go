@@ -58,13 +58,13 @@ func (c *NewsController) GetAddNews() mvc.View {
 
 func (c *NewsController) PostAddNews() {
 	if err := c.News.NewsAdd(c.Ctx.FormValues()); err == nil {
-		c.Ctx.Redirect("/news")
+		c.Ctx.Redirect("/backend/news")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
-}
 
-func (c *NewsController) GetUpdateNewsBy(id uint) mvc.View {
+func (c *NewsController) Ge}
+tUpdateNewsBy(id uint) mvc.View {
 	NewsInfo, err := c.News.NewsInfo(id)
 	if err != nil {
 		return commons.MvcError(err.Error(), c.Ctx)
@@ -93,7 +93,7 @@ func (c *NewsController) GetUpdateNewsBy(id uint) mvc.View {
 
 func (c *NewsController) PostUpdateNews() {
 	if err := c.News.NewsUpdate(c.Ctx.FormValues()); err == nil {
-		c.Ctx.Redirect("/news")
+		c.Ctx.Redirect("/backend/news")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
@@ -101,7 +101,7 @@ func (c *NewsController) PostUpdateNews() {
 
 func (c *NewsController) GetDelNewsBy(id uint) {
 	if err := c.News.NewsDel(id); err == nil {
-		c.Ctx.Redirect("/news")
+		c.Ctx.Redirect("/backend/news")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}

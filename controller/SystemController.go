@@ -47,7 +47,7 @@ func (c *SystemController) PostUpdatePassword() {
 	admin_user, _ := c.Session.Get("admin_user").(map[string]interface{})
 	admin_id, _ := admin_user["id"].(uint)
 	if err := admin_model.AdminPasswodUpdate(admin_id, password, Repassword); err == nil {
-		c.Ctx.Redirect("/system/main")
+		c.Ctx.Redirect("/backend/system/main")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
@@ -71,7 +71,7 @@ func (c *SystemController) PostUpdateAdmin() {
 		return
 	}
 	if err := admin_model.AdminUpdate(c.Ctx.FormValues(), admin_id, filePath); err == nil {
-		c.Ctx.Redirect("/system/update/admin")
+		c.Ctx.Redirect("/backend/system/update/admin")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}

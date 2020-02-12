@@ -67,7 +67,7 @@ func (c *AdministratorsController) PostUpdateAdmin() {
 	int_admin_id, _ := strconv.Atoi(admin_id)
 	delete(postValues, "id")
 	if err := admin_model.AdminUpdate(postValues, uint(int_admin_id), filePath); err == nil { // '' 为否理饿普阿填filepath
-		c.Ctx.Redirect("/administrators/update/admin/" + admin_id)
+		c.Ctx.Redirect("/backend/administrators/update/admin/" + admin_id)
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
@@ -90,7 +90,7 @@ func (c *AdministratorsController) PostAddAdmin() {
 	}
 
 	if err := admin_model.AddUpdate(c.Ctx.FormValues(), filePath); err == nil {
-		c.Ctx.Redirect("/administrators")
+		c.Ctx.Redirect("/backend/administrators")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
@@ -117,7 +117,7 @@ func (c *AdministratorsController) PostUpdatePassword() {
 	Repassword := html.EscapeString(strings.TrimSpace(c.Ctx.FormValue("Repassword")))
 	int_admin_id, _ := strconv.Atoi(id)
 	if err := admin_model.AdminPasswodUpdate(uint(int_admin_id), password, Repassword); err == nil {
-		c.Ctx.Redirect("/administrators")
+		c.Ctx.Redirect("/backend/administrators")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
@@ -125,7 +125,7 @@ func (c *AdministratorsController) PostUpdatePassword() {
 
 func (c *AdministratorsController) GetDelAdminBy(id uint) {
 	if err := admin_model.AdminDel(id); err == nil {
-		c.Ctx.Redirect("/administrators")
+		c.Ctx.Redirect("/backend/administrators")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}

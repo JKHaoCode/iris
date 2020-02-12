@@ -45,7 +45,7 @@ func (c *CategorysController) GetAddCategory() mvc.View {
 
 func (c *CategorysController) PostAddCategory() {
 	if err := CategoryModel.CategoryAdd(c.Ctx.FormValues()); err == nil {
-		c.Ctx.Redirect("/categorys")
+		c.Ctx.Redirect("/backend/categorys")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
@@ -73,7 +73,7 @@ func (c *CategorysController) GetUpdateCategoryBy(id uint) mvc.View {
 
 func (c *CategorysController) PostUpdateCategory() {
 	if err := CategoryModel.CategoryUpdate(c.Ctx.FormValues()); err == nil {
-		c.Ctx.Redirect("/categorys")
+		c.Ctx.Redirect("/backend/categorys")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
@@ -81,7 +81,7 @@ func (c *CategorysController) PostUpdateCategory() {
 
 func (c *CategorysController) GetDelCategoryBy(id uint) {
 	if err := CategoryModel.CategoryDel(id); err == nil {
-		c.Ctx.Redirect("/categorys")
+		c.Ctx.Redirect("/backend/categorys")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
