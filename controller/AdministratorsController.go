@@ -8,6 +8,7 @@ import (
 	commons "iris/commons"
 	"iris/libs"
 	"iris/model"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -55,6 +56,7 @@ func (c *AdministratorsController) GetUpdateAdminBy(id uint) mvc.View {
 func (c *AdministratorsController) PostUpdateAdmin() {
 	err, filePath := libs.UploadFile("headico", c.Ctx)
 	if err == false {
+		// log.Println(err, filePath)
 		commons.DefaultErrorShow(filePath, c.Ctx)
 		return
 	}
@@ -64,7 +66,7 @@ func (c *AdministratorsController) PostUpdateAdmin() {
 	admin_id := postValues["id"][0]
 	int_admin_id, _ := strconv.Atoi(admin_id)
 	delete(postValues, "id")
-	if err := admin_model.AdminUpdate(postValues, uint(int_admin_id), filePath); err == nil {
+	if err := admin_model.AdminUpdate(postValues, uint(int_admin_id), filePath); err == nil { // '' 为否理饿普阿填filepath
 		c.Ctx.Redirect("/administrators/update/admin/" + admin_id)
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)

@@ -18,15 +18,17 @@ import (
 
 func UploadFile(key string, Ctx iris.Context) (bool, string) {
 	file, info, err := Ctx.FormFile(key)
+	// log.Println(file, info, err)
 	filePath := ""
 	if err != nil {
 		return false, "Error while uploading: <b>" + err.Error() + "</b>"
 	}
-
+	// log.Println(config.GetInt64("UploadSize"))
+	// log.Println(config.GetInt("site.AdminId"))
 	var minSize int64 = 0
 	if info.Size > minSize {
-		log.Println(config.GetInt64("UploadSize") * 1024 * 1024)
-		if info.Size > config.GetInt64("UploadSize")*1024*1024 {
+		// log.Println(config.GetInt64("UploadSize"))
+		if info.Size > config.GetInt64("site.UploadSize")*1024*1024 { // author 少加了site viper 看配置
 			return false, "Error while uploading: UploadSize ToMax"
 		}
 		fname := strconv.Itoa(commons.GenerateRangeNum(100, 9999)) + "_" + info.Filename
@@ -35,7 +37,7 @@ func UploadFile(key string, Ctx iris.Context) (bool, string) {
 
 		fileSuffixExists := false
 		//CanFileSuffix := [...]string{".jpg", ".png", ".jpge", ".gif"}
-		CanFileSuffix := strings.Split(config.GetString("UploadSuffixExists"), ",")
+		CanFileSuffix := strings.Split(config.GetString("site.UploadSuffixExists"), ",")
 		for _, v := range CanFileSuffix {
 			if v == fileSuffix {
 				fileSuffixExists = true

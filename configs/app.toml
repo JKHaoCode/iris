@@ -4,7 +4,7 @@ DefaultLayout = "shared/layout.html"
 DefaultError  = "shared/error.html"
 
 SessionCoolieName = "my_go_dht_ccjsicnsbdhcbsjcjdbzas"
-SessionExpires    = 1 # session保持时间 /小时
+SessionExpires    = 4 # session保持时间 /小时
 
 #调试开关
 APPDebug     = true #IRIS框架调试模式 true
