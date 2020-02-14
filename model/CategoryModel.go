@@ -69,6 +69,7 @@ func (this *Category) CategoryAdd(postValues map[string][]string) error {
 }
 
 func (this *Category) CategoryUpdate(postValues map[string][]string) error {
+	log.Println(postValues)
 	var category Category
 	db := libs.DB
 

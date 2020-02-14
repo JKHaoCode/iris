@@ -27,3 +27,21 @@ mysql>source /home/abc/abc.sql;
 方法二：
 mysql -u用户名 -p密码 数据库名 < 数据库名.sql
 #mysql -uabc_f -p abc < abc.sql
+
+mysql S U I D
+
+update
+UPDATE table_name SET field1=new-value1, field2=new-value2
+[WHERE Clause]
+
+INSERT INTO table_name ( field1, field2,...fieldN )
+                       VALUES
+                       ( value1, value2,...valueN );
+
+SELECT column_name,column_name
+FROM table_name
+[WHERE Clause]
+[LIMIT N][ OFFSET M]
+
+
+DELETE FROM table_name [WHERE Clause]
