@@ -5,7 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	config "github.com/spf13/viper"
 	"iris/libs"
-	"log"
+	// "log"
 	"math"
 	"strings"
 )
@@ -16,13 +16,13 @@ type News struct {
 	Title        string `gorm:"type:varchar(250); NOT NULL; DEFAULT '';"validate:"required"`
 	Descript     string `gorm:"type:varchar(500); NOT NULL; DEFAULT '0';"validate:"required"`
 	Content      string `gorm:"type:text;NOT NULL; DEFAULT '0';"validate:"required,html"`
-	Tags         string `gorm:"type:varchar(100);DEFAULT '';"`
+	Tags_id      string `gorm:"type:varchar(100);DEFAULT '';"`
 	Sort         int    `gorm:"type:int(11); NOT NULL; DEFAULT '0';"validate:"number,min=0"`
 	CategoryName string `gorm:"-"`
+	TagsName     string `gorm:"-"`
 }
 
 func (this *News) List(page int) ([]News, int, int) {
-	log.Println(News{})
 	var data = []News{}
 	var totalCount int
 	db := libs.DB
@@ -46,6 +46,7 @@ func (this *News) NewsInfo(id uint) (News, error) {
 }
 
 func (this *News) NewsAdd(postValues map[string][]string) error {
+	// log.Println(postValues)
 	var news News
 	db := libs.DB
 
@@ -60,7 +61,7 @@ func (this *News) NewsAdd(postValues map[string][]string) error {
 	}
 
 	news.Category_id = strings.Join(postValues["Category_id"], ",")
-
+	news.Tags_id = strings.Join(postValues["tag_id"], ",")
 	if err := db.Create(&news).Error; err != nil {
 		return err
 	}
@@ -85,7 +86,7 @@ func (this *News) NewsUpdate(postValues map[string][]string) error {
 	}
 
 	news.Category_id = strings.Join(postValues["Category_id"], ",")
-
+	news.Tags_id = strings.Join(postValues["tag_id"], ",")
 	if err := db.Save(&news).Error; err != nil {
 		return err
 	}

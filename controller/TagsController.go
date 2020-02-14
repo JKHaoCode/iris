@@ -7,6 +7,7 @@ import (
 	commons "iris/commons"
 	"iris/model"
 	"log"
+	"strconv"
 )
 
 var TagsModel = model.Tags{}
@@ -14,17 +15,24 @@ var TagsModel = model.Tags{}
 type TagsController struct {
 	Ctx     iris.Context
 	Session *sessions.Session
+	Tags    model.Tags
 }
 
 func (c *TagsController) Get() mvc.View {
-	Tags := model.Tags{}
-	list := Tags.List()
+	page, err := strconv.Atoi(c.Ctx.URLParam("page"))
+	if err != nil || page < 1 {
+		page = 1
+	}
+
+	// Tags := model.Tags{}
+	list, total, totalPages := c.Tags.List(page)
 	log.Println(list)
 	return mvc.View{
 		Name: "tags/list.html",
 		Data: iris.Map{
-			"Title": "标签列表",
-			"list":  list,
+			"Title":    "标签列表",
+			"list":     list,
+			"PageHtml": commons.GetPageHtml(totalPages, page, total, c.Ctx.Path()),
 		},
 	}
 }

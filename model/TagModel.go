@@ -3,9 +3,11 @@ package model
 import (
 	"errors"
 	"github.com/jinzhu/gorm"
+	config "github.com/spf13/viper"
 	"iris/libs"
 	"log"
-	// "strings"
+	"math"
+	"strings"
 )
 
 // var ListTree []Category
@@ -17,15 +19,23 @@ type Tags struct {
 	// Level int    `gorm:"-"`
 }
 
-func (this *Tags) List() []Tags {
+func (this *Tags) List(page int) ([]Tags, int, int) {
 	var data = []Tags{}
+	var totalCount int
 	db := libs.DB
 
 	err := db.Order("sort desc").Find(&data).Error
 	if err != nil {
 		log.Fatalln(err)
 	}
-	return data
+
+	limit := config.GetInt("pagination.PageSize")
+	offset := (page - 1) * limit
+	db.Find(&data).Count(&totalCount)
+	db.Offset(offset).Limit(limit).Order("id desc").Find(&data)
+	totalPages := int(math.Ceil(float64(totalCount) / float64(limit)))
+
+	return data, totalCount, totalPages
 }
 
 func (this *Tags) TagInfo(id uint) (Tags, error) {
@@ -38,15 +48,17 @@ func (this *Tags) TagInfo(id uint) (Tags, error) {
 	return tag, nil
 }
 
-// func (this *Category) CategoryMoreInfo(ids string) ([]Category, error) {
-// 	var data = []Category{}
-// 	db := libs.DB
+func (this *Tags) ListAll() []Tags {
+	var data = []Tags{}
+	db := libs.DB
 
-// 	if db.Where("id in (?)", strings.Split(ids, ",")).Find(&data).RecordNotFound() {
-// 		return []Category{}, errors.New("分类未找到")
-// 	}
-// 	return data, nil
-// }
+	err := db.Order("sort desc").Find(&data).Error
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return data
+}
 
 func (this *Tags) TagsAdd(postValues map[string][]string) error {
 	var tag Tags
@@ -100,6 +112,16 @@ func (this *Tags) TagDel(id uint) error {
 	}
 
 	return nil
+}
+
+func (this *Tags) TagsMoreInfo(ids string) ([]Tags, error) {
+	var data = []Tags{}
+	db := libs.DB
+	if db.Where("id in (?)", strings.Split(ids, ",")).Find(&data).RecordNotFound() {
+		return []Tags{}, errors.New("未找到标签")
+	}
+
+	return data, nil
 }
 
 // func (this *Category) CategoryDel(id uint) error {

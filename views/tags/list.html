@@ -9,7 +9,7 @@
                 <table class="table table-bordered">
                     <tbody><tr>
                         <th style="width: 10px">#</th>
-                        <th>分类名称</th>
+                        <th>标签名称</th>
                         <th>排序</th>
                         <th>创建时间</th>
                         <th>修改时间</th>
@@ -32,6 +32,7 @@
                 </table>
             </div>
             <!-- /.box-body -->
+            {{.PageHtml | strToHtml}}
         </div>
     </div>
 </div>

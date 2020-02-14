@@ -23,6 +23,7 @@ func (c *NewsController) Get() mvc.View {
 	}
 	list, total, totalPages := c.News.List(page)
 	Category := model.Category{}
+	Tag := model.Tags{}
 	for k, v := range list {
 		CategoryName := ""
 		if val, err := Category.CategoryMoreInfo(v.Category_id); err == nil {
@@ -31,6 +32,15 @@ func (c *NewsController) Get() mvc.View {
 			}
 		}
 		list[k].CategoryName = strings.TrimRight(CategoryName, ",")
+	}
+	for k, v := range list {
+		TagsName := ""
+		if val, err := Tag.TagsMoreInfo(v.Tags_id); err == nil {
+			for _, vv := range val {
+				TagsName += vv.Name + ","
+			}
+		}
+		list[k].TagsName = strings.TrimRight(TagsName, ",")
 	}
 	return mvc.View{
 		Name: "news/list.html",
@@ -44,14 +54,17 @@ func (c *NewsController) Get() mvc.View {
 
 func (c *NewsController) GetAddNews() mvc.View {
 	Category := model.Category{}
+	Tag := model.Tags{}
 	list := Category.List()
+	tagList := Tag.ListAll()
 	model.ListTree = []model.Category{}
 	list = Category.GetTree(list, 0, 0)
 	return mvc.View{
 		Name: "news/addNews.html",
 		Data: iris.Map{
-			"Title": "新增内容",
-			"list":  list,
+			"Title":   "新增内容",
+			"list":    list,
+			"tagList": tagList,
 		},
 	}
 }
@@ -80,6 +93,15 @@ func (c *NewsController) GetUpdateNewsBy(id uint) mvc.View {
 		CategoryIds = append(CategoryIds, _v)
 	}
 
+	Tag := model.Tags{}
+	tagList := Tag.ListAll()
+	tagIds := []int{}
+	// if NewsInfo.Tags_id
+	for _, v := range strings.Split(NewsInfo.Tags_id, ",") {
+		_v, _ := strconv.Atoi(v)
+		tagIds = append(tagIds, _v)
+	}
+
 	return mvc.View{
 		Name: "news/updateNews.html",
 		Data: iris.Map{
@@ -87,6 +109,8 @@ func (c *NewsController) GetUpdateNewsBy(id uint) mvc.View {
 			"UpdateNewsInfo": NewsInfo,
 			"CategoryIds":    CategoryIds,
 			"list":           list,
+			"tagList":        tagList,
+			"tagIds":         tagIds,
 		},
 	}
 }
