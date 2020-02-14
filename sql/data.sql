@@ -35,12 +35,13 @@ CREATE TABLE `admin` (
   KEY `username` (`account`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
+alter table `admin` add `online` bool NOT NULL DEFAULT 1 COMMENT '状态';
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('1', '2018-10-22 14:03:48', '2018-11-01 15:01:13', null, 'admin', '21232f297a57a5a743894a0e4a801fc3', '一个golang iris学习者', '灯火阑珊', '7146275@qq.com', '/uploads/headico/706_head_1 (5).png');
-INSERT INTO `admin` VALUES ('2', '2018-11-01 10:53:53', '2018-11-01 14:15:55', null, 'cuijun', '3b7fb9742017f12726bcebcd69fb7470', 'Go Web Iris中文网致力于，在中国国内推广Go语言', '众里寻他', '10000@qq.cm', '/uploads/headico/4862_head_1 (4).png');
-INSERT INTO `admin` VALUES ('3', '2018-11-01 14:16:42', '2018-11-05 11:27:47', null, 'test', '098f6bcd4621d373cade4e832627b4f6', 'testtesttesttest', 'test1231', 'test03@qq.com', '/uploads/headico/8314_head_1 (3).png');
+INSERT INTO `admin` VALUES ('1', '2018-10-22 14:03:48', '2018-11-01 15:01:13', null, 'admin', '21232f297a57a5a743894a0e4a801fc3', '一个golang iris学习者', '灯火阑珊', '7146275@qq.com', '/uploads/headico/706_head_1 (5).png', true);
+INSERT INTO `admin` VALUES ('2', '2018-11-01 10:53:53', '2018-11-01 14:15:55', null, 'cuijun', '3b7fb9742017f12726bcebcd69fb7470', 'Go Web Iris中文网致力于，在中国国内推广Go语言', '众里寻他', '10000@qq.cm', '/uploads/headico/4862_head_1 (4).png', true);
+INSERT INTO `admin` VALUES ('3', '2018-11-01 14:16:42', '2018-11-05 11:27:47', null, 'test', '098f6bcd4621d373cade4e832627b4f6', 'testtesttesttest', 'test1231', 'test03@qq.com', '/uploads/headico/8314_head_1 (3).png', true);
 
 -- ----------------------------
 -- Table structure for `category`
@@ -63,7 +64,7 @@ CREATE TABLE `category` (
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES ('1', '国家分类', '0', '999', '2018-11-06 10:00:29', '2018-11-06 10:00:32', null);
+INSERT INTO `category` VALUES ('1', '编程语言', '0', '999', '2018-11-06 10:00:29', '2018-11-06 10:00:32', null);
 INSERT INTO `category` VALUES ('2', '亚洲', '1', '0', '2018-11-06 10:00:45', '2018-11-06 10:00:48', null);
 INSERT INTO `category` VALUES ('3', '中国', '2', '0', '2018-11-06 10:00:45', '2018-11-06 10:00:45', null);
 INSERT INTO `category` VALUES ('4', '韩国', '2', '0', '2018-11-06 10:00:45', '2018-11-06 10:00:45', null);

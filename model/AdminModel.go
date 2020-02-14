@@ -23,6 +23,7 @@ type Admin struct {
 	Descript string `gorm:"type:varchar(255);DEFAULT '';"`
 	Email    string `gorm:"type:varchar(100);DEFAULT '';"`
 	Headico  string `gorm:"type:varchar(200);DEFAULT '';"`
+	Online 	 int 	`gorm:type:bool;DEFAULT 1`
 }
 
 func (this *Admin) List(page int) ([]Admin, int, int) {
