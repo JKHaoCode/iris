@@ -135,7 +135,7 @@ ALTER TABLE `news` ADD `tags_id` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '标�
 -- ----------------------------
 -- Records of news
 -- ----------------------------
-INSERT INTO `news` VALUES ('1', '2,3', '测试1', '测试1', '测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1', null, '1', '2018-11-07 10:05:02', '2018-11-07 10:05:04', null);
-INSERT INTO `news` VALUES ('2', '3', '213', 'wd', '<p><strong>dwdwdwd</strong></p>\r\n', '', '1', '2018-11-07 15:35:33', '2018-11-07 15:35:33', null);
-INSERT INTO `news` VALUES ('3', '3', '324234', 'efef', '<p>ef</p>\r\n', '', '1', '2018-11-07 15:36:20', '2018-11-07 15:36:20', null);
-INSERT INTO `news` VALUES ('4', '2,4,6,20,22', '234324', '我的', '<p>二次沟</p>\r\n\r\n<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n	<tbody>\r\n		<tr>\r\n			<td>\r\n			<h2>多吃点</h2>\r\n			</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>&nbsp;</p>\r\n', '', '1', '2018-11-07 15:42:02', '2018-11-07 16:36:23', null);
+INSERT INTO `news` VALUES ('1', '2,3', '测试1', '测试1', '测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1测试1', null, '1', '2018-11-07 10:05:02', '2018-11-07 10:05:04', null, 1);
+INSERT INTO `news` VALUES ('2', '3', '213', 'wd', '<p><strong>dwdwdwd</strong></p>\r\n', '', '1', '2018-11-07 15:35:33', '2018-11-07 15:35:33', null, 1);
+INSERT INTO `news` VALUES ('3', '3', '324234', 'efef', '<p>ef</p>\r\n', '', '1', '2018-11-07 15:36:20', '2018-11-07 15:36:20', null, 1);
+INSERT INTO `news` VALUES ('4', '2,4,6,20,22', '234324', '我的', '<p>二次沟</p>\r\n\r\n<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n	<tbody>\r\n		<tr>\r\n			<td>\r\n			<h2>多吃点</h2>\r\n			</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>&nbsp;</p>\r\n', '', '1', '2018-11-07 15:42:02', '2018-11-07 16:36:23', null, 1);

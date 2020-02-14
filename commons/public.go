@@ -49,19 +49,19 @@ func GetPageHtml(totalPages, currentPage, total int, path string) string {
 
 	previous := ""
 	if currentPage == 1 {
-		previous = "<li class='paginate_button previous disabled'><a href='#'>Previous</a></li> "
+		previous = "<li class='paginate_button previous disabled'><a>Previous</a></li> "
 	} else {
 		previous = "<li class='paginate_button previous'><a href='" + path + "?page=" + strconv.Itoa(currentPage-1) + "'>Previous</a></li> "
 	}
 
 	next := ""
 	if currentPage >= totalPages {
-		next = "<li class='paginate_button next disabled'><a href='#'>Next</a></li> "
+		next = "<li class='paginate_button next disabled'><a>Next</a></li> "
 	} else {
 		next = "<li class='paginate_button next'><a href='" + path + "?page=" + strconv.Itoa(currentPage+1) + "'>Next</a></li> "
 	}
 
-	html := "<div class='box-footer clearfix'><div class='dataTables_info'>总共" + strconv.Itoa(total) + "条记录/" + strconv.Itoa(totalPages) + "页</div>" +
+	html := "<div class='box-footer clearfix'><div class='dataTables_info' style=\"display: inline-block; line-height: 80px\">总共" + strconv.Itoa(total) + "条记录/" + strconv.Itoa(totalPages) + "页</div>" +
 		"<ul class='pagination pagination-sm no-margin pull-right'> " +
 		previous +
 		list +
