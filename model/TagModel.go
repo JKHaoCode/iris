@@ -1,7 +1,7 @@
 package model
 
 import (
-	// "errors"
+	"errors"
 	"github.com/jinzhu/gorm"
 	"iris/libs"
 	"log"
@@ -28,15 +28,15 @@ func (this *Tags) List() []Tags {
 	return data
 }
 
-// func (this *Category) CategoryInfo(id uint) (Category, error) {
-// 	var category Category
-// 	db := libs.DB
+func (this *Tags) TagInfo(id uint) (Tags, error) {
+	var tag Tags
+	db := libs.DB
 
-// 	if db.Where("id = ?", id).First(&category).RecordNotFound() {
-// 		return Category{}, errors.New("分类未找到")
-// 	}
-// 	return category, nil
-// }
+	if db.Where("id = ?", id).First(&tag).RecordNotFound() {
+		return Tags{}, errors.New("标签未找到")
+	}
+	return tag, nil
+}
 
 // func (this *Category) CategoryMoreInfo(ids string) ([]Category, error) {
 // 	var data = []Category{}
@@ -48,46 +48,59 @@ func (this *Tags) List() []Tags {
 // 	return data, nil
 // }
 
-// func (this *Category) CategoryAdd(postValues map[string][]string) error {
-// 	var category Category
-// 	db := libs.DB
+func (this *Tags) TagsAdd(postValues map[string][]string) error {
+	var tag Tags
+	db := libs.DB
 
-// 	if err := libs.FormDecode(&category, postValues); err != nil {
-// 		return err
-// 	}
-// 	if err := libs.Validate(category); err != nil {
-// 		return err
-// 	}
-// 	if !db.Where("name = ? ", category.Name).First(&Category{}).RecordNotFound() {
-// 		return errors.New("该名称已经存在")
-// 	}
-// 	if err := db.Create(&category).Error; err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
+	if err := libs.FormDecode(&tag, postValues); err != nil {
+		return err
+	}
+	if err := libs.Validate(tag); err != nil {
+		return err
+	}
+	if !db.Where("name = ? ", tag.Name).First(&Tags{}).RecordNotFound() {
+		return errors.New("该名称已经存在")
+	}
+	if err := db.Create(&tag).Error; err != nil {
+		return err
+	}
+	return nil
+}
 
-// func (this *Category) CategoryUpdate(postValues map[string][]string) error {
-// 	var category Category
-// 	db := libs.DB
+func (this *Tags) TagsUpdate(postValues map[string][]string) error {
+	var tag Tags
+	db := libs.DB
 
-// 	if err := libs.FormDecode(&category, postValues); err != nil {
-// 		return err
-// 	}
-// 	if err := libs.Validate(category); err != nil {
-// 		return err
-// 	}
-// 	if !db.Where("name = ? and id != ?", category.Name, category.ID).Find(&Category{}).RecordNotFound() {
-// 		return errors.New("该名称已经存在")
-// 	}
-// 	if db.Where("id = ? ", category.ID).Find(&Category{}).RecordNotFound() {
-// 		return errors.New("未查询到分类id")
-// 	}
-// 	if err := db.Save(&category).Error; err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
+	if err := libs.FormDecode(&tag, postValues); err != nil {
+		return err
+	}
+	if err := libs.Validate(tag); err != nil {
+		return err
+	}
+	// log.Println(tag, postValues)
+	if !db.Where("name = ? and id != ?", tag.Name, tag.ID).Find(&Tags{}).RecordNotFound() {
+		return errors.New("该名称已经存在")
+	}
+	if db.Where("id = ? ", tag.ID).Find(&Tags{}).RecordNotFound() {
+		return errors.New("未查询到标签id")
+	}
+	if err := db.Save(&tag).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (this *Tags) TagDel(id uint) error {
+	var tag Tags
+
+	db := libs.DB
+
+	if err := db.Where("id = ?", id).Delete(&tag).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
 
 // func (this *Category) CategoryDel(id uint) error {
 // 	var category Category
