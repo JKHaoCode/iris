@@ -17,7 +17,7 @@ import (
 
 func init() {
 	config.AddConfigPath("./configs")
-	config.SetConfigName("mysql")
+	config.SetConfigName("mysql") // config file
 	if err := config.ReadInConfig(); err != nil {
 		log.Fatalf("Error reading config file, %s", err)
 	}
@@ -40,7 +40,16 @@ func init() {
 
 func main() {
 	app := iris.New()
-	config.SetConfigName("app")
+	app.Get("/", func(ctx iris.Context) {
+		ctx.Redirect("/frontend")
+	}) // 访问 / 时 自动跳转 /frontend
+	app.Get("/backend", func(ctx iris.Context) {
+		ctx.Redirect("/backend/system")
+	})
+	app.Get("/backend/system", func(ctx iris.Context) {
+		ctx.Redirect("/backend/system/main")
+	})
+	config.SetConfigName("app") //读取的文件
 	if err := config.ReadInConfig(); err != nil {
 		log.Fatalf("读取配置文件错误, %s", err)
 	}

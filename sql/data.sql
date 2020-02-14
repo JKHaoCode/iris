@@ -88,6 +88,27 @@ INSERT INTO `category` VALUES ('22', '肯尼亚', '9', '0', '2018-11-06 10:00:45
 INSERT INTO `category` VALUES ('23', '澳大利亚', '10', '0', '2018-11-06 10:00:45', '2018-11-06 10:00:45', null);
 INSERT INTO `category` VALUES ('24', '新西兰', '10', '0', '2018-11-06 10:00:45', '2018-11-06 10:00:45', null);
 
+
+-- ----------------------------
+-- Table structure for `tags`
+-- ----------------------------
+DROP TABLE IF EXISTS `tags`;
+CREATE TABLE `tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '标签名称',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sort` (`sort`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='标签表';
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `tags` VALUES ('1', 'React', '0', '2019-11-06 10:00:29', '2019-11-06 10:00:32', null);
+
 -- ----------------------------
 -- Table structure for `news`
 -- ----------------------------
@@ -107,7 +128,9 @@ CREATE TABLE `news` (
   KEY `idx_user_deleted_at` (`deleted_at`),
   KEY `sort` (`sort`),
   KEY `category_id` (`category_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='内容表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='内容表';
+
+ALTER TABLE `news` ADD `tags_id` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '标签';
 
 -- ----------------------------
 -- Records of news

@@ -5,6 +5,7 @@ import (
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/controller"
+	"iris/controller/frontend"
 	"iris/middleware"
 )
 
@@ -13,6 +14,10 @@ func Routes(app *iris.Application) {
 	mvc.New(app.Party("/")). // 根据请求类型和请求URL自动匹配处理方法 contoller 方法
 					Register(commons.SessManager.Start).
 					Handle(new(controllers.IndexController))
+
+	mvc.New(app.Party("/frontend")).
+		Register(commons.SessManager.Start).
+		Handle(new(frontend.IndexController))
 
 	//登录路由
 	mvc.New(app.Party("/login")).

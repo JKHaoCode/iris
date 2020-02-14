@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/jinzhu/gorm"
 	"iris/libs"
+	"log"
 	"strings"
 )
 
@@ -23,7 +24,7 @@ func (this *Category) List() []Category {
 
 	err := db.Order("sort desc").Find(&data).Error
 	if err != nil {
-		//log.Fatalln(err)
+		log.Fatalln(err)
 	}
 	return data
 }
