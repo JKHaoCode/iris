@@ -17,7 +17,9 @@ UploadSuffixExists = ".jpg,.png,.jpge,.gif" #允许上传文件的后缀
 
 [server]
 domain = "127.0.0.1"
-port   = "8888"
+port   = "8080"
 
 [pagination]
 PageSize = 10
+
+FrontendPageSize = 5 #前端

@@ -5,6 +5,8 @@ import (
 	"github.com/jinzhu/gorm"
 	config "github.com/spf13/viper"
 	"iris/libs"
+	"log"
+
 	// "log"
 	"math"
 	"strings"
@@ -27,7 +29,7 @@ func (this *News) List(page int) ([]News, int, int) {
 	var totalCount int
 	db := libs.DB
 
-	limit := config.GetInt("pagination.PageSize")
+	limit := config.GetInt("pagination.FrontendPageSize")
 	offset := (page - 1) * limit
 	db.Find(&data).Count(&totalCount)
 	db.Offset(offset).Limit(limit).Order("id desc").Find(&data)
@@ -101,4 +103,18 @@ func (this *News) NewsDel(id uint) error {
 		return err
 	}
 	return nil
+}
+
+func (this *News) NewsNewest() []News {
+	var data = []News{}
+
+	db := libs.DB
+
+	err := db.Order("id desc").Limit(3).Find(&data).Error
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return data
+
 }
