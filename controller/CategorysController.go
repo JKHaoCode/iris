@@ -3,8 +3,7 @@ package controllers
 import (
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
-	"github.com/kataras/iris/sessions"
-	commons "iris/commons"
+	"iris/commons"
 	"iris/model"
 )
 
@@ -12,7 +11,7 @@ var CategoryModel = model.Category{}
 
 type CategorysController struct {
 	Ctx     iris.Context
-	Session *sessions.Session
+	// Session *sessions.Session
 }
 
 func (c *CategorysController) Get() mvc.View {

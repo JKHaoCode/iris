@@ -3,8 +3,7 @@ package controllers
 import (
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
-	"github.com/kataras/iris/sessions"
-	commons "iris/commons"
+	"iris/commons"
 	"iris/model"
 	"log"
 	"strconv"
@@ -14,7 +13,7 @@ var TagsModel = model.Tags{}
 
 type TagsController struct {
 	Ctx     iris.Context
-	Session *sessions.Session
+	// Session *sessions.Session
 	Tags    model.Tags
 }
 

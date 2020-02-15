@@ -5,7 +5,7 @@ import (
 	"github.com/kataras/iris/mvc"
 	"github.com/kataras/iris/sessions"
 	"html"
-	commons "iris/commons"
+	"iris/commons"
 	"iris/libs"
 	"iris/model"
 	"runtime"

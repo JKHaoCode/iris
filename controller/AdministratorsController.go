@@ -3,9 +3,8 @@ package controllers
 import (
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
-	"github.com/kataras/iris/sessions"
 	"html"
-	commons "iris/commons"
+	"iris/commons"
 	"iris/libs"
 	"iris/model"
 	"log"
@@ -15,7 +14,7 @@ import (
 
 type AdministratorsController struct {
 	Ctx     iris.Context
-	Session *sessions.Session
+	// Session *sessions.Session
 }
 
 func (c *AdministratorsController) Get() mvc.View {

@@ -3,8 +3,7 @@ package controllers
 import (
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
-	"github.com/kataras/iris/sessions"
-	commons "iris/commons"
+	"iris/commons"
 	"iris/model"
 	"strconv"
 	"strings"
@@ -12,7 +11,7 @@ import (
 
 type NewsController struct {
 	Ctx     iris.Context
-	Session *sessions.Session
+	// Session *sessions.Session
 	News    model.News
 }
 
