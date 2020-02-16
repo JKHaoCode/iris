@@ -8,6 +8,7 @@ import (
 	"html"
 	commons "iris/commons"
 	"iris/model"
+	"log"
 	"strings"
 	"sync"
 )
@@ -40,9 +41,11 @@ func (c *LoginController) Post() {
 	account := html.EscapeString(strings.TrimSpace(c.Ctx.FormValue("account")))
 	password := html.EscapeString(strings.TrimSpace(c.Ctx.FormValue("password")))
 	if adminInfo, err := admin_model.AdminLogin(account, password); err == nil { //登录成功
+		log.Println(adminInfo)
 		sessionInfo := make(map[string]interface{})
 		sessionInfo["id"] = adminInfo.ID
 		sessionInfo["name"] = adminInfo.Account
+		sessionInfo["password"] = adminInfo.Password
 		c.Session.Set("admin_user", sessionInfo)
 		c.Ctx.Redirect("/backend/system/main")
 	} else {

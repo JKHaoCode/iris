@@ -3,10 +3,13 @@ package middleware
 import (
 	"github.com/kataras/iris/context"
 	"iris/commons"
+	"log"
 )
 
 func SessionLoginAuth(Ctx context.Context) {
-	if auth := commons.SessManager.Start(Ctx).Get("admin_user"); auth == nil {
+	auth := commons.SessManager.Start(Ctx).Get("admin_user")
+	log.Println(auth)
+	if auth == nil {
 		Ctx.Redirect("/login")
 		return
 	}

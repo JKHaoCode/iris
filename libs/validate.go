@@ -12,6 +12,7 @@ import (
 var (
 	uni      *ut.UniversalTranslator
 	validate *validator.Validate
+	// admin    *model.Admin
 )
 
 func Validate(s interface{}) error {
@@ -40,3 +41,16 @@ func FormDecode(v interface{}, postValues map[string][]string) error {
 	}
 	return nil
 }
+
+//func CheckPassword(original map[string]interface {}) bool {
+//	dbData := model.Admin{}
+//	admin, err := dbData.AdminInfo(uint(original["id"]))
+//	if err != nil {
+//		log.Println("err: ", err)
+//		return false
+//	}
+//	if admin.Password == original["password"] {
+//		return true
+//	}
+//	return false
+//}
