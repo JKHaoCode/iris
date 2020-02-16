@@ -7,6 +7,7 @@ import (
 	"github.com/kataras/iris/sessions"
 	"html"
 	commons "iris/commons"
+	"iris/libs"
 	"iris/model"
 	"log"
 	"strings"
@@ -49,6 +50,7 @@ func (c *LoginController) Post() {
 		c.Session.Set("admin_user", sessionInfo)
 		c.Ctx.Redirect("/backend/system/main")
 	} else {
+		libs.LogError.Println(err) //用于日志
 		c.Ctx.Redirect("/login/show?err=" + err.Error())
 		//登录失败
 		//c.Ctx.ViewData("Message", err.Error())

@@ -10,6 +10,7 @@ import (
 	"iris/libs"
 	"math"
 	"sync"
+	"log"
 )
 
 var mu sync.Mutex
@@ -35,7 +36,7 @@ func (this *Admin) List(page int) ([]Admin, int, int) {
 	db.Find(&data).Count(&totalCount)
 	err := db.Offset(offset).Limit(limit).Order("id desc").Find(&data).Error
 	if err != nil {
-		//log.Fatalln(err)
+		log.Fatalln(err)
 	}
 	totalPages := int(math.Ceil(float64(totalCount) / float64(limit)))
 	return data, totalCount, totalPages

@@ -5,8 +5,6 @@ import (
 	"github.com/jinzhu/gorm"
 	config "github.com/spf13/viper"
 	"iris/libs"
-	"log"
-
 	// "log"
 	"math"
 	"strings"
@@ -53,18 +51,22 @@ func (this *News) NewsAdd(postValues map[string][]string) error {
 	db := libs.DB
 
 	if err := libs.FormDecode(&news, postValues); err != nil {
+		libs.LogError.Println(err)
 		return err
 	}
 	if err := libs.Validate(news); err != nil {
+		libs.LogError.Println(err)
 		return err
 	}
 	if !db.Where("title = ? ", news.Title).First(&News{}).RecordNotFound() {
+		libs.LogInfo.Println("该标题已经存在")
 		return errors.New("该标题已经存在")
 	}
 
 	news.Category_id = strings.Join(postValues["Category_id"], ",")
 	news.Tags_id = strings.Join(postValues["tag_id"], ",")
 	if err := db.Create(&news).Error; err != nil {
+		libs.LogError.Println(err)
 		return err
 	}
 	return nil
@@ -75,9 +77,11 @@ func (this *News) NewsUpdate(postValues map[string][]string) error {
 	db := libs.DB
 
 	if err := libs.FormDecode(&news, postValues); err != nil {
+		libs.LogError.Println(err)
 		return err
 	}
 	if err := libs.Validate(news); err != nil {
+		libs.LogError.Println(err)
 		return err
 	}
 	if !db.Where("title = ? and id != ?", news.Title, news.ID).First(&News{}).RecordNotFound() {
@@ -90,6 +94,7 @@ func (this *News) NewsUpdate(postValues map[string][]string) error {
 	news.Category_id = strings.Join(postValues["Category_id"], ",")
 	news.Tags_id = strings.Join(postValues["tag_id"], ",")
 	if err := db.Save(&news).Error; err != nil {
+		libs.LogError.Println(err)
 		return err
 	}
 	return nil
@@ -100,6 +105,7 @@ func (this *News) NewsDel(id uint) error {
 	db := libs.DB
 
 	if err := db.Where("id = ?", id).Delete(&news).Error; err != nil {
+		libs.LogError.Println(err)
 		return err
 	}
 	return nil
@@ -112,7 +118,7 @@ func (this *News) NewsNewest() []News {
 
 	err := db.Order("id desc").Limit(3).Find(&data).Error
 	if err != nil {
-		log.Fatalln(err)
+		libs.LogError.Println(err)
 	}
 
 	return data

@@ -9,7 +9,6 @@ import (
 	"iris/model"
 	"strconv"
 	"strings"
-	"log"
 )
 
 type IndexController struct {
@@ -27,7 +26,6 @@ func (r *IndexController) Get() mvc.View {
 
 	list, total, totalPages := r.News.List(page)
 	NewsNewest := r.News.NewsNewest()
-	log.Println(NewsNewest)
 	Category := model.Category{}
 	Tag := model.Tags{}
 	CategoryList := Category.List()
