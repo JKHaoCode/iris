@@ -7,7 +7,7 @@ SessionCoolieName = "my_go_dht_ccjsicnsbdhcbsjcjdbzas"
 SessionExpires    = 8 # session保持时间 /小时
 
 #调试开关
-APPDebug     = false #IRIS框架调试模式 true
+APPDebug     = true #IRIS框架调试模式 true
 DblogerModel = true #Gorm调试模式
 
 AdminId = 1 #系统管理 不允许删除

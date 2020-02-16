@@ -29,6 +29,18 @@ func (this *Category) List() []Category {
 	return data
 }
 
+func (this *Category) ListFrontend() []Category {
+	var data = []Category{}
+	db := libs.DB
+
+	err := db.Where("id != 1").Where("parent_id  = 1").Order("sort desc").Find(&data).Error
+	if err != nil {
+		// log.Fatalln(err)
+		libs.LogError.Println(err)
+	}
+	return data
+}
+
 func (this *Category) CategoryInfo(id uint) (Category, error) {
 	var category Category
 	db := libs.DB

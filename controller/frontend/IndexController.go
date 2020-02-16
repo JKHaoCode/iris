@@ -9,6 +9,7 @@ import (
 	"iris/model"
 	"strconv"
 	"strings"
+	"log"
 )
 
 type IndexController struct {
@@ -28,7 +29,7 @@ func (r *IndexController) Get() mvc.View {
 	NewsNewest := r.News.NewsNewest()
 	Category := model.Category{}
 	Tag := model.Tags{}
-	CategoryList := Category.List()
+	CategoryList := Category.ListFrontend()
 	TagList := Tag.ListAll()
 	for k, v := range list {
 		CategoryName := ""
@@ -48,7 +49,7 @@ func (r *IndexController) Get() mvc.View {
 		}
 		list[k].TagsName = strings.TrimRight(TagsName, ",")
 	}
-	// log.Println(list, total, totalPages)
+	log.Println(CategoryList)
 	return mvc.View{
 		Name:   "frontend/index/index.html",
 		Layout: "shared/layoutFront.html",

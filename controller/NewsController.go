@@ -20,7 +20,7 @@ func (c *NewsController) Get() mvc.View {
 	if err != nil || page < 1 {
 		page = 1
 	}
-	list, total, totalPages := c.News.List(page)
+	list, total, totalPages := c.News.ListBackend(page)
 	Category := model.Category{}
 	Tag := model.Tags{}
 	for k, v := range list {
@@ -44,7 +44,7 @@ func (c *NewsController) Get() mvc.View {
 	return mvc.View{
 		Name: "news/list.html",
 		Data: iris.Map{
-			"Title":    "内容列表",
+			"Title":    "文章列表",
 			"list":     list,
 			"PageHtml": commons.GetPageHtml(totalPages, page, total, c.Ctx.Path()),
 		},

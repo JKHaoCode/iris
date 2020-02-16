@@ -35,6 +35,20 @@ func (this *News) List(page int) ([]News, int, int) {
 	return data, totalCount, totalPages
 }
 
+
+func (this *News) ListBackend(page int) ([]News, int, int) {
+	var data = []News{}
+	var totalCount int
+	db := libs.DB
+
+	limit := config.GetInt("pagination.PageSize")
+	offset := (page - 1) * limit
+	db.Find(&data).Count(&totalCount)
+	db.Offset(offset).Limit(limit).Order("id desc").Find(&data)
+	totalPages := int(math.Ceil(float64(totalCount) / float64(limit)))
+	return data, totalCount, totalPages
+}
+
 func (this *News) NewsInfo(id uint) (News, error) {
 	var news News
 	db := libs.DB
