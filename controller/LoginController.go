@@ -8,6 +8,7 @@ import (
 	"html"
 	commons "iris/commons"
 	"iris/libs"
+	"iris/libs/logging"
 	"iris/model"
 	"log"
 	"strings"
@@ -50,6 +51,7 @@ func (c *LoginController) Post() {
 		c.Session.Set("admin_user", sessionInfo)
 		c.Ctx.Redirect("/backend/system/main")
 	} else {
+		logging.Info(err)
 		libs.LogError.Println(err) //用于日志
 		c.Ctx.Redirect("/login/show?err=" + err.Error())
 		//登录失败

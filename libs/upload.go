@@ -9,6 +9,7 @@ import (
 	config "github.com/spf13/viper"
 	"io"
 	"iris/commons"
+	"iris/libs/logging"
 	"log"
 	"os"
 	"path"
@@ -24,6 +25,7 @@ func UploadFile(key string, Ctx iris.Context) (bool, string) {
 	}
 	filePath := ""
 	if err != nil {
+		logging.Info(err.Error())
 		return false, "Error while uploading: <b>" + err.Error() + "</b>"
 	}
 	// log.Println(config.GetInt64("UploadSize"))

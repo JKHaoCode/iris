@@ -1,5 +1,6 @@
 .idea/*
 .vscode/*
 logs/*
+runtime/logs/*
 /vendor/*
 !/vendor/vendor.json
