@@ -8,13 +8,25 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" role="form" method="post" action="/backend/categorys/update/category" enctype="multipart/form-data">
-                <input type="hidden" value="{{.UpdateCategoryInfo.Model.ID}}" name="ID">
+            <form class="form-horizontal" role="form" method="post" action="/backend/menus/update/menu" enctype="multipart/form-data">
+                <input type="hidden" value="{{.UpdateMenuInfo.Model.ID}}" name="ID">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="Name" class="col-sm-2 control-label">分类名称</label>
+                        <label for="Name" class="col-sm-2 control-label">菜单名称</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Name" placeholder="分类名称" value="{{.UpdateCategoryInfo.Name}}" name="Name" required="required" >
+                            <input type="text" class="form-control" id="Name" placeholder="分类名称" value="{{.UpdateMenuInfo.Name}}" name="Name" required="required" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name" class="col-sm-2 control-label">URL</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Name" placeholder="URL" value="{{.UpdateMenuInfo.URL}}" name="URL" required="required" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name" class="col-sm-2 control-label">Icon</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Name" placeholder="Icon" value="{{.UpdateMenuInfo.Icon}}" name="Icon" required="required" >
                         </div>
                     </div>
 
@@ -22,8 +34,8 @@
                         <label for="ParentId" class="col-sm-2 control-label">上级分类</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="ParentId" id="ParentId" required="required" >
-                                <option value="0">顶级分类</option>
-                                {{$ParentId  := .UpdateCategoryInfo.ParentId}}
+                                <option value="999">菜单栏</option>
+                                {{$ParentId  := .UpdateMenuInfo.ParentId}}
                                 {{range $i, $v := .list}}
                                     <option value="{{$v.ID}}"  {{if eq $ParentId $v.ID}} selected {{end}}>{{$v.Name}}</option>
                                 {{end}}
@@ -34,7 +46,7 @@
                         <label for="Sort" class="col-sm-2 control-label">排序</label>
 
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="Sort" placeholder="排序" name="Sort"  required="required" value="{{.UpdateCategoryInfo.Sort}}">
+                            <input type="number" class="form-control" id="Sort" placeholder="排序" name="Sort"  required="required" value="{{.UpdateMenuInfo.Sort}}">
                         </div>
                     </div>
                     <div class="form-group">

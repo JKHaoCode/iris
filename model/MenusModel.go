@@ -9,23 +9,34 @@ import (
 )
 
 var ListMenusTree []Menus
+var ListMenusToTree []TreeList
 
 type Menus struct {
 	gorm.Model
 	Name     string `gorm:"not null;VARCHAR(100);"validate:"required"`
 	URL 	 string `gorm:"not null;VARCHAR(100);"validate:"required"`
 	Icon	 string `gorm:"VARCHAR(50)"`
-	ParentId int    `gorm:"default:'0';not null;"validate:"required,number,gte=1"`
+	ParentId int    `gorm:"default:'0';not null;"`
 	Sort     int    `gorm:"default:'0';not null;"validate:"number,min=0"`
 	Level 	 int 	`gorm:"-"`
-	Child    []*Menus `gorm:"-"`
+}
+
+type TreeList struct {
+	gorm.Model
+	Name     string `gorm:"not null;VARCHAR(100);"validate:"required"`
+	URL 	 string `gorm:"not null;VARCHAR(100);"validate:"required"`
+	Icon	 string `gorm:"VARCHAR(50)"`
+	ParentId int    `gorm:"default:'0';not null;"`
+	Sort     int    `gorm:"default:'0';not null;"validate:"number,min=0"`
+	Level 	 int 	`gorm:"-"`
+	Children []TreeList	`gorm:"-"`
 }
 
 func (this *Menus) List() []Menus {
 	var data = []Menus{}
 	db := libs.DB
 
-	err := db.Order("sort ace").Find(&data).Error
+	err := db.Order("sort").Find(&data).Error
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -47,7 +58,7 @@ func (this *Menus) MenusMoreInfo(ids string) ([]Menus, error) {
 	db := libs.DB
 
 	if db.Where("id in (?)", strings.Split(ids, ",")).Find(&data).RecordNotFound() {
-		return []Menus{}, errors.New("分类未找到")
+		return []Menus{}, errors.New("分类未找到[]")
 	}
 	return data, nil
 }
@@ -72,7 +83,7 @@ func (this *Menus) MenusAdd(postValues map[string][]string) error {
 }
 
 func (this *Menus) MenusUpdate(postValues map[string][]string) error {
-	// log.Println(postValues)
+	log.Println(postValues)
 	var menus Menus
 	db := libs.DB
 
@@ -82,7 +93,7 @@ func (this *Menus) MenusUpdate(postValues map[string][]string) error {
 	if err := libs.Validate(menus); err != nil {
 		return err
 	}
-	if !db.Where("name = ? and id != ?", menus.Name, menus.ID).Find(&Category{}).RecordNotFound() {
+	if !db.Where("name = ? and id != ?", menus.Name, menus.ID).Find(&Menus{}).RecordNotFound() {
 		return errors.New("该名称已经存在")
 	}
 	if db.Where("id = ? ", menus.ID).Find(&Menus{}).RecordNotFound() {
@@ -122,4 +133,24 @@ func (this *Menus) GetTree(list []Menus, pid int, level int) []Menus {
 		}
 	}
 	return ListMenusTree
+}
+
+func (m *Menus)GetMenu(menu []Menus, pid int) []TreeList {
+	treeList := []TreeList{}
+	for _, v := range menu{
+		if v.ParentId == pid {
+			child := v.GetMenu(menu, int(v.ID))
+			node := TreeList{
+				// ID:       v.ID,
+				Name:     v.Name,
+				Sort:     v.Sort,
+				URL:      v.URL,
+				ParentId: v.ParentId,
+				Icon: v.Icon,
+			}
+			node.Children = child
+			treeList = append(treeList, node)
+		}
+	}
+	return treeList
 }

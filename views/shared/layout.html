@@ -92,38 +92,31 @@
             </div>
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header" style="text-align: center">菜单栏</li>
-                <li class="">
-                    <a href="/backend/system/main">
-                        <i class="fa fa-dashboard"></i>
-                        <span>系统概况</span>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="/backend/administrators">
-                        <i class="fa fa-users"></i>
-                        <span>管理员</span>
-                    </a>
-                </li>
-                <li class="treeview" >
-                    <a href="#">
-                        <i class="fa fa-laptop"></i>
-                        <span>文章管理</span>
-                        <span class="pull-right-container">
+                {{range $k, $v := .listToTree}}
+                {{if len $v.Children}}
+                    <li class="treeview" >
+                        <a href="#">
+                            <i class="fa fa-laptop"></i>
+                            <span>{{$v.Name}}</span>
+                            <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class=""><a href="/backend/categorys"><i class="fa fa-circle-o"></i> 分类管理</a></li>
-                        <li><a href="/backend/tags"><i class="fa fa-circle-o"></i> 标签管理</a></li>
-                        <li><a href="/backend/news"><i class="fa fa-circle-o"></i> 文章管理</a></li>
-                    </ul>
-                </li>
-                <li class="">
-                    <a href="/backend/menus">
-                        <i class="fa fa-list"></i>
-                        <span>菜单栏</span>
-                    </a>
-                </li>
+                        </a>
+                        <ul class="treeview-menu">
+                            {{range $j, $i := $v.Children}}
+                            <li class=""><a href="{{$i.URL}}"><i class="{{$i.Icon}}"></i> {{$i.Name}}</a></li>
+                                {{end}}
+                        </ul>
+                    </li>
+                    {{else}}
+                        <li class="">
+                            <a href="{{$v.URL}}">
+                                <i class="{{$v.Icon}}"></i>
+                                <span>{{$v.Name}}</span>
+                            </a>
+                        </li>
+                {{end}}
+                {{end}}
             </ul>
         </section>
     </aside>

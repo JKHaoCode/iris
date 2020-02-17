@@ -158,7 +158,7 @@ CREATE TABLE `menus` (
   KEY `idx_user_deleted_at` (`deleted_at`),
   KEY `parent_id` (`parent_id`),
   KEY `sort` (`sort`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COMMENT='Menus表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='Menus表';
 
 ALTER TABLE `menus` ADD `icon` VARCHAR(50) DEFAULT '' COMMENT 'icon';
-INSERT  INTO `menus` VALUES (1, '系统概况', 0, 1, '/backend/system/main', '2018-11-07 15:36:20', '2018-11-07 15:36:20', null, 'fa fa-dashboard')
+INSERT  INTO `menus` VALUES (999, '菜单栏', 0, 1, '/backend', '2018-11-07 15:36:20', '2018-11-07 15:36:20', null, 'fa fa-dashboard')

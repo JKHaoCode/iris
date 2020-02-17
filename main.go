@@ -81,12 +81,17 @@ func main() {
 		if auth := commons.SessManager.Start(ctx).Get("admin_user"); auth != nil {
 			admin_user, _ := auth.(map[string]interface{})
 			var admin_model model.Admin
+			var menu model.Menus
+			list := menu.List()
+			listToTree := menu.GetMenu(list, 999)
 			admin_id, _ := admin_user["id"].(uint)
 			adminInfo, _ := admin_model.AdminInfo(admin_id)
 			if adminInfo.Headico == "" {
 				adminInfo.Headico = "/public/adminlit/dist/img/user2-160x160.jpg"
 			}
+			log.Println(listToTree)
 			ctx.ViewData("adminInfo", adminInfo)
+			ctx.ViewData("listToTree", listToTree)
 		}
 		ctx.ViewData("Title", config.GetString("site.DefaultTitle"))
 		now := time.Now().Format(ctx.Application().ConfigurationReadOnly().GetTimeFormat())

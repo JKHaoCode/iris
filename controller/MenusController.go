@@ -5,6 +5,7 @@ import (
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/model"
+	"log"
 )
 
 var MenusModel = model.Menus{}
@@ -32,7 +33,7 @@ func (c *MenusController) GetAddMenu() mvc.View {
 	Menu := model.Menus{}
 	list := Menu.List()
 	model.ListMenusTree = []model.Menus{}
-	list = Menu.GetTree(list, 0, 0)
+	list = Menu.GetTree(list, 999, 0)
 	return mvc.View{
 		Name: "menus/addMenus.html",
 		Data: iris.Map{
@@ -50,29 +51,30 @@ func (c *MenusController) PostAddMenu() {
 	}
 }
 
-func (c *MenusController) GetUpdateCategoryBy(id uint) mvc.View {
-	categoryInfo, err := CategoryModel.CategoryInfo(id)
+func (c *MenusController) GetUpdateMenuBy(id uint) mvc.View {
+	menuInfo, err := MenusModel.MenusInfo(id)
 	if err != nil {
 		return commons.MvcError(err.Error(), c.Ctx)
 	}
-	Category := model.Category{}
-	list := Category.List()
-	model.ListTree = []model.Category{}
-	list = Category.GetTree(list, 0, 0)
+	Menu := model.Menus{}
+	list := Menu.List()
+	model.ListMenusTree = []model.Menus{}
+	list = Menu.GetTree(list, 0, 0)
 
 	return mvc.View{
-		Name: "category/updateMenus.html",
+		Name: "menus/updateMenus.html",
 		Data: iris.Map{
-			"Title":              "菜单修改",
-			"UpdateCategoryInfo": categoryInfo,
-			"list":               list,
+			"Title":          "菜单修改",
+			"UpdateMenuInfo": menuInfo,
+			"list":           list,
 		},
 	}
 }
 
-func (c *MenusController) PostUpdateCategory() {
-	if err := CategoryModel.CategoryUpdate(c.Ctx.FormValues()); err == nil {
-		c.Ctx.Redirect("/backend/categorys")
+func (c *MenusController) PostUpdateMenu() {
+	log.Println(c.Ctx.FormValues())
+	if err := MenusModel.MenusUpdate(c.Ctx.FormValues()); err == nil {
+		c.Ctx.Redirect("/backend/menus")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
@@ -80,7 +82,7 @@ func (c *MenusController) PostUpdateCategory() {
 
 func (c *MenusController) GetDelCategoryBy(id uint) {
 	if err := CategoryModel.CategoryDel(id); err == nil {
-		c.Ctx.Redirect("/backend/categorys")
+		c.Ctx.Redirect("/backend/menus")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
