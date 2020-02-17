@@ -40,8 +40,12 @@ func Routes(app *iris.Application) {
 	mvc.New(app.Party("/backend/news", middleware.SessionLoginAuth)).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.NewsController))
-
+	// 标签管理
 	mvc.New(app.Party("/backend/tags", middleware.SessionLoginAuth)).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.TagsController))
+	// 菜单
+	mvc.New(app.Party("/backend/menus", middleware.SessionLoginAuth)).
+		Register(commons.SessManager.Start).
+		Handle(new(controllers.MenusController))
 }

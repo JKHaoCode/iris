@@ -9,7 +9,6 @@ import (
 	"iris/model"
 	"strconv"
 	"strings"
-	"log"
 )
 
 type IndexController struct {
@@ -49,7 +48,7 @@ func (r *IndexController) Get() mvc.View {
 		}
 		list[k].TagsName = strings.TrimRight(TagsName, ",")
 	}
-	log.Println(CategoryList)
+	// log.Println(CategoryList)
 	return mvc.View{
 		Name:   "frontend/index/index.html",
 		Layout: "shared/layoutFront.html",
@@ -61,6 +60,22 @@ func (r *IndexController) Get() mvc.View {
 			"CategoryList": CategoryList,
 			"TagList": TagList,
 			"NewsNewest": NewsNewest,
+		},
+	}
+}
+
+func (r *IndexController) GetSearch() mvc.View {
+	return mvc.View{
+		Name:   "frontend/index/index.html",
+		Layout: "shared/layoutFront.html",
+		Data: iris.Map{
+			"Title":   "查询结果",
+			"Message": "Message 成功了 嘻嘻",
+			//"list": list,
+			//"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
+			//"CategoryList": CategoryList,
+			//"TagList": TagList,
+			//"NewsNewest": NewsNewest,
 		},
 	}
 }

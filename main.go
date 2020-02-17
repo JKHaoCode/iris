@@ -2,6 +2,8 @@ package main
 
 import (
 	iris "github.com/kataras/iris"
+	"iris/libs/logging"
+
 	// context "github.com/kataras/iris/context"
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
@@ -96,6 +98,7 @@ func main() {
 	app.OnAnyErrorCode(func(ctx iris.Context) {
 		_, err := ctx.HTML("<center>很抱歉！当前页面错误,错误代码:" + strconv.Itoa(ctx.GetStatusCode()) + "</center>")
 		if err != nil {
+			logging.Info("内部错误,错误代码 ", err)
 			log.Fatalf("内部错误,错误代码 %s", err)
 		}
 	})

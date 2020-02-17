@@ -59,7 +59,7 @@ CREATE TABLE `category` (
   KEY `idx_user_deleted_at` (`deleted_at`),
   KEY `parent_id` (`parent_id`),
   KEY `sort` (`sort`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COMMENT='分类表';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COMMENT='分类表';
 
 -- ----------------------------
 -- Records of category
@@ -140,3 +140,25 @@ INSERT INTO `news` VALUES ('1', '2,3', '测试1', '测试1', '测试1测试1测�
 INSERT INTO `news` VALUES ('2', '3', '213', 'wd', '<p><strong>dwdwdwd</strong></p>\r\n', '', '1', '2018-11-07 15:35:33', '2018-11-07 15:35:33', null, 1);
 INSERT INTO `news` VALUES ('3', '3', '324234', 'efef', '<p>ef</p>\r\n', '', '1', '2018-11-07 15:36:20', '2018-11-07 15:36:20', null, 1);
 INSERT INTO `news` VALUES ('4', '2,4,6,20,22', '234324', '我的', '<p>二次沟</p>\r\n\r\n<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n	<tbody>\r\n		<tr>\r\n			<td>\r\n			<h2>多吃点</h2>\r\n			</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>&nbsp;</p>\r\n', '', '1', '2018-11-07 15:42:02', '2018-11-07 16:36:23', null, 1);
+
+-- ----------------------------
+-- Table structure for `Menus`
+-- ----------------------------
+DROP TABLE IF EXISTS `menus`;
+CREATE TABLE `menus` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT 'Menus名称',
+  `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '父id',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `url` varchar(100) NOT NULL DEFAULT '' COMMENT 'URL',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_user_deleted_at` (`deleted_at`),
+  KEY `parent_id` (`parent_id`),
+  KEY `sort` (`sort`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COMMENT='Menus表';
+
+ALTER TABLE `menus` ADD `icon` VARCHAR(50) DEFAULT '' COMMENT 'icon';
+INSERT  INTO `menus` VALUES (1, '系统概况', 0, 1, '/backend/system/main', '2018-11-07 15:36:20', '2018-11-07 15:36:20', null, 'fa fa-dashboard')
