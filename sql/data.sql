@@ -18,7 +18,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `admin`
 -- ----------------------------
-DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `admin` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `admin` (
   KEY `username` (`account`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-alter table `admin` add `online` bool NOT NULL DEFAULT 1 COMMENT '状态';
+alter table `users` add `online` bool NOT NULL DEFAULT 1 COMMENT '状态';
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
@@ -161,4 +161,60 @@ CREATE TABLE `menus` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='Menus表';
 
 ALTER TABLE `menus` ADD `icon` VARCHAR(50) DEFAULT '' COMMENT 'icon';
-INSERT  INTO `menus` VALUES (999, '菜单栏', 0, 1, '/backend', '2018-11-07 15:36:20', '2018-11-07 15:36:20', null, 'fa fa-dashboard')
+
+
+CREATE TABLE `permission_role` (
+`permission_id` int(10) unsigned NOT NULL,
+`role_id` int(10) unsigned NOT NULL,
+PRIMARY KEY (`permission_id`,`role_id`),
+KEY `permission_role_role_id_foreign` (`role_id`),
+CONSTRAINT `permission_role_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT `permission_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `role_user` (
+`user_id` int(10) unsigned NOT NULL,
+`role_id` int(10) unsigned NOT NULL,
+PRIMARY KEY (`user_id`,`role_id`),
+KEY `role_user_role_id_foreign` (`role_id`),
+CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT `role_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE table `permissions`(
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT "",
+  `display_name` varchar(255) DEFAULT "",
+  `description` varchar(255) DEFAULT "",
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `permissions_name_unique` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='permissions表';
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`name` varchar(255) NOT NULL DEFAULT "",
+`display_name` varchar(255) NOT NULL DEFAULT "",
+`description` varchar(255) NOT NULL DEFAULT "",
+`created_at` timestamp NULL DEFAULT NULL,
+`updated_at` timestamp NULL DEFAULT NULL,
+`deleted_at` timestamp NULL DEFAULT NULL,
+PRIMARY KEY (`id`),
+UNIQUE KEY `permissions_name_unique` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='permissions表';
+
+CREATE TABLE `roles` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`name` varchar(255) NOT NULL,
+`display_name` varchar(255) DEFAULT NULL,
+`description` varchar(255) DEFAULT NULL,
+`created_at` timestamp NULL DEFAULT NULL,
+`updated_at` timestamp NULL DEFAULT NULL,
+PRIMARY KEY (`id`),
+UNIQUE KEY `roles_name_unique` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE table permissions (
+  id int(10) unsigned
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

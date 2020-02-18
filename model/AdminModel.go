@@ -8,9 +8,9 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	config "github.com/spf13/viper"
 	"iris/libs"
+	"log"
 	"math"
 	"sync"
-	"log"
 )
 
 var mu sync.Mutex
@@ -24,7 +24,7 @@ type Admin struct {
 	Descript string `gorm:"type:varchar(255);DEFAULT '';"`
 	Email    string `gorm:"type:varchar(100);DEFAULT '';"`
 	Headico  string `gorm:"type:varchar(200);DEFAULT '';"`
-	Online 	 int 	`gorm:type:bool;DEFAULT 1`
+	Online   int    `gorm:"type:bool;DEFAULT 1"`
 }
 
 func (this *Admin) List(page int) ([]Admin, int, int) {
@@ -32,7 +32,7 @@ func (this *Admin) List(page int) ([]Admin, int, int) {
 	var totalCount int
 	limit := config.GetInt("pagination.PageSize")
 	offset := (page - 1) * limit
-	db := libs.DB
+	db := libs.DB.Table("users")
 	db.Find(&data).Count(&totalCount)
 	err := db.Offset(offset).Limit(limit).Order("id desc").Find(&data).Error
 	if err != nil {
@@ -46,7 +46,7 @@ func (this *Admin) AdminLogin(account string, password string) (Admin, error) {
 	if account == "" || password == "" {
 		return Admin{}, errors.New("帐号或密码为空")
 	}
-	db := libs.DB
+	db := libs.DB.Table("users")
 	var admin Admin
 	has := md5.Sum([]byte(password))
 	md5_password := fmt.Sprintf("%x", has) //将[]byte转成16进制
@@ -58,7 +58,7 @@ func (this *Admin) AdminLogin(account string, password string) (Admin, error) {
 
 func (this *Admin) AdminInfo(id uint) (Admin, error) {
 	var admin Admin
-	db := libs.DB
+	db := libs.DB.Table("users")
 	if db.Where("id = ?", id).First(&admin).RecordNotFound() {
 		return Admin{}, errors.New("用户未找到")
 	}
@@ -73,7 +73,7 @@ func (this *Admin) AdminPasswodUpdate(admin_id uint, password, Repassword string
 		return errors.New("密码不一致")
 	}
 
-	db := libs.DB
+	db := libs.DB.Table("users")
 	var admin Admin
 
 	if db.Where("id = ? ", admin_id).First(&admin).RecordNotFound() {
@@ -92,7 +92,7 @@ func (this *Admin) AdminPasswodUpdate(admin_id uint, password, Repassword string
 
 func (this *Admin) AdminUpdate(postValues map[string][]string, admin_id uint, filePath string) error {
 	var admin Admin
-	db := libs.DB
+	db := libs.DB.Table("users")
 	if db.Where("id = ? ", admin_id).First(&admin).RecordNotFound() {
 		return errors.New("未查询到用户id")
 	}
@@ -123,7 +123,7 @@ func (this *Admin) AddUpdate(postValues map[string][]string, filePath string) er
 	has := md5.Sum([]byte(postValues["password"][0]))
 	postValues["password"][0] = fmt.Sprintf("%x", has) //将[]byte转成16进制
 
-	db := libs.DB
+	db := libs.DB.Table("users")
 
 	if !db.Where("account = ? ", postValues["account"][0]).First(&admin).RecordNotFound() {
 		return errors.New("该账户已经存在")
@@ -150,7 +150,7 @@ func (this *Admin) AdminDel(id uint) error {
 		return errors.New("系统管理员不允许删除")
 	}
 	var admin Admin
-	db := libs.DB
+	db := libs.DB.Table("users")
 	if err := db.Where("id = ?", id).Delete(&admin).Error; err != nil {
 		return errors.New("删除失败")
 	}
