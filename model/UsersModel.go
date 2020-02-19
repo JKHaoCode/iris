@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"iris/libs/logging"
 	config "github.com/spf13/viper"
 	"iris/libs"
 	"log"
@@ -50,7 +51,8 @@ func (this *Admin) AdminLogin(account string, password string) (Admin, error) {
 	var admin Admin
 	has := md5.Sum([]byte(password))
 	md5_password := fmt.Sprintf("%x", has) //将[]byte转成16进制
-	if db.Where(&Admin{Account: account, Password: md5_password}).First(&admin).RecordNotFound() {
+	if err := db.Where("account = ?", account).Where("password = ?", md5_password).First(&admin).RecordNotFound(); err {
+		logging.Info("登录错误： 没有查到", err)
 		return Admin{}, errors.New("帐号或密码错误")
 	}
 	return admin, nil

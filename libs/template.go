@@ -13,3 +13,7 @@ func TimeToDate(t time.Time) string {
 func StrToHtml(content string) template.HTML {
 	return template.HTML(content)
 }
+
+func AddKey(content int) int {
+	return content + 1
+}

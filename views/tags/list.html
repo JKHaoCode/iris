@@ -17,7 +17,7 @@
                     </tr>
                     {{range $i, $v := .list}}
                     <tr>
-                        <td>{{$v.ID}}</td>
+                        <td>{{$i | AddKey}}</td>
                         <td>{{$v.Name}}</td>
                         <td>{{$v.Sort}}</td>
                         <td>{{$v.CreatedAt | TimeToDate}}</td>

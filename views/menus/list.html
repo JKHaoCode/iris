@@ -18,7 +18,7 @@
                     </tr>
                     {{range $i, $v := .list}}
                     <tr>
-                        <td>{{$v.ID}}</td>
+                        <td>{{$i | AddKey}}</td>
                         <td>{{$v.Name}}</td>
                         <td>{{$v.URL}}</td>
                         <td>{{$v.Sort}}</td>

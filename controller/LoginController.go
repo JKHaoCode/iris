@@ -43,7 +43,7 @@ func (c *LoginController) Post() {
 	account := html.EscapeString(strings.TrimSpace(c.Ctx.FormValue("account")))
 	password := html.EscapeString(strings.TrimSpace(c.Ctx.FormValue("password")))
 	if adminInfo, err := admin_model.AdminLogin(account, password); err == nil { //登录成功
-		log.Println(adminInfo)
+		log.Println("查询users：", adminInfo)
 		sessionInfo := make(map[string]interface{})
 		sessionInfo["id"] = adminInfo.ID
 		sessionInfo["name"] = adminInfo.Account
