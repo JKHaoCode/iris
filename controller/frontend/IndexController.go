@@ -158,3 +158,10 @@ func (r *IndexController) GetArticle() mvc.View {
 		},
 	}
 }
+
+func (r *IndexController) GetArticleBy(id uint) mvc.View {
+	return mvc.View{
+		Name: "frontend/single.html",
+		Layout: "shared/layoutFront.html",
+	}
+}
