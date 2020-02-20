@@ -5,6 +5,8 @@ import (
 	"github.com/jinzhu/gorm"
 	config "github.com/spf13/viper"
 	"iris/libs"
+	"iris/libs/logging"
+
 	// "log"
 	"math"
 	"strings"
@@ -137,4 +139,20 @@ func (this *News) NewsNewest() []News {
 
 	return data
 
+}
+
+func (this *News) NewsSearch(search string) []News {
+	var data = []News{}
+
+	db := libs.DB
+
+	err := db.Where("`news`.`title` like '%"+search+"%'").Limit(10).Find(&data).Error
+
+	if err != nil {
+		logging.Info("errors: ", err)
+
+		return []News{}
+	}
+
+	return data
 }
