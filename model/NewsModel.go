@@ -29,7 +29,7 @@ func (this *News) List(page int) ([]News, int, int) {
 	var totalCount int
 	db := libs.DB
 
-	limit := config.GetInt("pagination.FrontendPageSize")
+	limit := config.GetInt("pagination.PageSize")
 	offset := (page - 1) * limit
 	db.Find(&data).Count(&totalCount)
 	db.Offset(offset).Limit(limit).Order("id desc").Find(&data)

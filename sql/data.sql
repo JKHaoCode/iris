@@ -211,6 +211,7 @@ CREATE TABLE `roles` (
 `description` varchar(255) DEFAULT NULL,
 `created_at` timestamp NULL DEFAULT NULL,
 `updated_at` timestamp NULL DEFAULT NULL,
+`deleted_at` timestamp NULL DEFAULT NULL,
 PRIMARY KEY (`id`),
 UNIQUE KEY `roles_name_unique` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -218,3 +219,18 @@ UNIQUE KEY `roles_name_unique` (`name`)
 CREATE table permissions (
   id int(10) unsigned
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+# 评论 comment
+CREATE TABLE `comment` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+`user_id` bigint(20) NOT NULL default 0 COMMENT '发表用户ID',
+`article_id` bigint(20) NOT NULL COMMENT '评论博文ID',
+`comment_like_count` bigint(20) NOT NULL DEFAULT 0 COMMENT '点赞数',
+`comment_content` text NOT NULL COMMENT '评论内容',
+# `parent_comment_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '父评论ID',
+`created_at` timestamp NULL DEFAULT NULL,
+`updated_at` timestamp NULL DEFAULT NULL,
+`deleted_at` timestamp NULL DEFAULT NULL,
+PRIMARY KEY (`id`),
+KEY `article_id` (`article_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;

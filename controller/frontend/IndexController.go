@@ -16,6 +16,7 @@ import (
 type IndexController struct {
 	Ctx iris.Context
 	News model.News
+	Comment model.Comment
 	// Session *sessions.Sessions
 }
 
@@ -191,6 +192,8 @@ func (r *IndexController) GetArticleBy(id uint) mvc.View {
 		tagIds = append(tagIds, tagsDetail.Name)
 	}
 
+	CommentList := r.Comment.CommentSearch(id)
+
 
 	return mvc.View{
 		Name: "frontend/single.html",
@@ -200,6 +203,27 @@ func (r *IndexController) GetArticleBy(id uint) mvc.View {
 			"Info": info,
 			"CategoryIds": CategoryIds,
 			"tagIds": tagIds,
+			"CommentList": CommentList,
 		},
 	}
 }
+
+func (r *IndexController) PostComment() {
+	var postValues map[string][]string
+	postValues = r.Ctx.FormValues()
+	if err := r.Comment.CommentAdd(postValues); err == nil {
+		id := postValues["ArticleId"][0]
+		// log.Printf("%T\n", id)
+		r.Ctx.Redirect("/frontend/article/" + id)
+	} else {
+		commons.DefaultErrorShow(err.Error(), r.Ctx)
+	}
+}
+
+//func (c *NewsController) PostAddNews() {
+//	if err := c.News.NewsAdd(c.Ctx.FormValues()); err == nil {
+//		c.Ctx.Redirect("/backend/news")
+//	} else {
+//		commons.DefaultErrorShow(err.Error(), c.Ctx)
+//	}
+//}
