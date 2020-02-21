@@ -88,9 +88,9 @@ func main() {
 			admin_id, _ := admin_user["id"].(uint)
 			adminInfo, _ := admin_model.AdminInfo(admin_id)
 			log.Println(adminInfo)
-			//if adminInfo.Headico == "" {
-			//	adminInfo.Headico = "/public/adminlit/dist/img/user2-160x160.jpg"
-			//}
+			if adminInfo.Headico == "" {
+				adminInfo.Headico = "/public/adminlit/dist/img/user2-160x160.jpg"
+			}
 			log.Println(adminInfo)
 			ctx.ViewData("adminInfo", adminInfo)
 			ctx.ViewData("listToTree", listToTree)
@@ -113,7 +113,7 @@ func main() {
 	route.Routes(app)
 
 	//应用配置文件
-	app.Configure(iris.WithConfiguration(iris.YAML("./configs/iris.yml")))
+				app.Configure(iris.WithConfiguration(iris.YAML("./configs/iris.yml")))
 
 	//Run
 	www := app.Party("www.")

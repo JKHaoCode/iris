@@ -11,6 +11,7 @@ import (
 	"iris/libs"
 	"log"
 	"math"
+	"strconv"
 	"sync"
 )
 
@@ -157,4 +158,21 @@ func (this *Admin) AdminDel(id uint) error {
 		return errors.New("删除失败")
 	}
 	return nil
+}
+
+
+func (this *Admin)CheckPassword(original map[string]string) bool {
+	// admin_user, _ := original.(map[string]interface{})
+	// dbData := .Admin{}
+	id, err := strconv.Atoi(original["id"])
+	admin, err := this.AdminInfo(uint(id))
+	log.Println(admin)
+	if err != nil {
+		// log.Println("err: ", err)
+		return false
+	}
+	if admin.Password == original["password"] {
+		return true
+	}
+	return false
 }

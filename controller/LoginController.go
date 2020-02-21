@@ -6,7 +6,7 @@ import (
 	"github.com/kataras/iris/mvc"
 	"github.com/kataras/iris/sessions"
 	"html"
-	commons "iris/commons"
+	"iris/commons"
 	"iris/libs"
 	"iris/libs/logging"
 	"iris/model"
@@ -23,7 +23,7 @@ type LoginController struct {
 
 func (c *LoginController) Get() {
 	if auth := commons.SessManager.Start(c.Ctx).Get("admin_user"); auth != nil {
-		c.Ctx.Redirect("/backenf/system/main")
+		c.Ctx.Redirect("/backend/system/main")
 	} else {
 		c.Ctx.Redirect("/login/show")
 	}
