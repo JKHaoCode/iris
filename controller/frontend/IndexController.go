@@ -4,6 +4,8 @@ import (
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
+	"iris/libs/logging"
+
 	// "github.com/kataras/iris/sessions"
 	"log"
 	"iris/model"
@@ -160,8 +162,44 @@ func (r *IndexController) GetArticle() mvc.View {
 }
 
 func (r *IndexController) GetArticleBy(id uint) mvc.View {
+	info, err := r.News.NewsInfo(id)
+	if err != nil {
+		logging.Info(err)
+	}
+
+	log.Println(info.Content)
+	CategoryIds := []string{}
+	for _, v := range strings.Split(info.Category_id, ",") {
+		_v, _ := strconv.Atoi(v)
+		var categoryInfo model.Category
+		categoryDetail, err := categoryInfo.CategoryInfo(uint(_v))
+		if err != nil {
+			logging.Info(err)
+		}
+		CategoryIds = append(CategoryIds, categoryDetail.Name)
+	}
+
+	tagIds := []string{}
+	// if NewsInfo.Tags_id
+	for _, v := range strings.Split(info.Tags_id, ",") {
+		_v, _ := strconv.Atoi(v)
+		var tagsInfo model.Tags
+		tagsDetail, err := tagsInfo.TagInfo(uint(_v))
+		if err != nil {
+			logging.Info(err)
+		}
+		tagIds = append(tagIds, tagsDetail.Name)
+	}
+
+
 	return mvc.View{
 		Name: "frontend/single.html",
 		Layout: "shared/layoutFront.html",
+		Data: iris.Map{
+			"Title": "文章详情",
+			"Info": info,
+			"CategoryIds": CategoryIds,
+			"tagIds": tagIds,
+		},
 	}
 }

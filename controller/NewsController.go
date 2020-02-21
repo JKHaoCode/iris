@@ -100,7 +100,6 @@ func (c *NewsController) GetUpdateNewsBy(id uint) mvc.View {
 		_v, _ := strconv.Atoi(v)
 		tagIds = append(tagIds, _v)
 	}
-
 	return mvc.View{
 		Name: "news/updateNews.html",
 		Data: iris.Map{
