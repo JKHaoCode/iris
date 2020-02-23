@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
+	"github.com/kataras/iris/sessions"
 	"html"
 	"iris/commons"
 	"iris/libs"
@@ -14,7 +15,7 @@ import (
 
 type AdministratorsController struct {
 	Ctx     iris.Context
-	// Session *sessions.Session
+	Session *sessions.Session
 }
 
 func (c *AdministratorsController) Get() mvc.View {
@@ -116,7 +117,8 @@ func (c *AdministratorsController) PostUpdatePassword() {
 	Repassword := html.EscapeString(strings.TrimSpace(c.Ctx.FormValue("Repassword")))
 	int_admin_id, _ := strconv.Atoi(id)
 	if err := admin_model.AdminPasswodUpdate(uint(int_admin_id), password, Repassword); err == nil {
-		c.Ctx.Redirect("/backend/administrators")
+		c.Session.Delete("admin_user")
+		c.Ctx.Redirect("/login")
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}

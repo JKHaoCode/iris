@@ -6,6 +6,8 @@ import (
 	"iris/model"
 )
 
+// var session *sessions.Session
+
 func SessionLoginAuth(Ctx context.Context) {
 	auth := commons.SessManager.Start(Ctx).Get("admin_user")
 	// log.Println("auth:", auth)
@@ -26,11 +28,15 @@ func SessionLoginAuth(Ctx context.Context) {
 		if userModel.CheckPassword(int(admin), password) {
 			Ctx.Next()
 		} else {
+			//status := session.Delete("admin_user")
+			//log.Println(status)
 			Ctx.Redirect("/login")
 			return
 		}
 		// Ctx.Next()
 	} else {
+		//status := session.Delete("admin_user")
+		//log.P
 		Ctx.Redirect("/login")
 		return
 	}
