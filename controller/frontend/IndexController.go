@@ -5,10 +5,10 @@ import (
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/libs/logging"
-
+	redis2 "iris/libs/redis"
+	"iris/model"
 	// "github.com/kataras/iris/sessions"
 	"log"
-	"iris/model"
 	"strconv"
 	"strings"
 )
@@ -21,6 +21,8 @@ type IndexController struct {
 }
 
 func (r *IndexController) Get() mvc.View {
+	redis := redis2.Singleton()
+	log.Println(redis.Get("article", "article"))
 	page, err := strconv.Atoi(r.Ctx.URLParam("page"))
 
 	if err != nil || page < 1 {

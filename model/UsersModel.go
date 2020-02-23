@@ -6,12 +6,11 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"iris/libs/logging"
 	config "github.com/spf13/viper"
 	"iris/libs"
+	"iris/libs/logging"
 	"log"
 	"math"
-	"strconv"
 	"sync"
 )
 
@@ -161,17 +160,16 @@ func (this *Admin) AdminDel(id uint) error {
 }
 
 
-func (this *Admin)CheckPassword(original map[string]string) bool {
+func (this *Admin)CheckPassword(id int, password string) bool {
 	// admin_user, _ := original.(map[string]interface{})
 	// dbData := .Admin{}
-	id, err := strconv.Atoi(original["id"])
 	admin, err := this.AdminInfo(uint(id))
 	log.Println(admin)
 	if err != nil {
 		// log.Println("err: ", err)
 		return false
 	}
-	if admin.Password == original["password"] {
+	if admin.Password == password {
 		return true
 	}
 	return false
