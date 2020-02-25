@@ -19,11 +19,11 @@ func SessionLoginAuth(Ctx context.Context) {
 		user, _ := auth.(map[string]interface{})
 		// log.Println("users: ", user)
 		// checkedUser := map[string] string{}
-		admin, _ := user["id"].(float64)
+		admin, _ := user["id"].(uint)
 		password, _ := user["password"].(string)
 		//log.Println("errs int", err)
 		//fmt.Printf("type %T\n", user["id"])
-		//fmt.Printf("type %T, %f, %d, %T\n", admin, admin, int(admin), int(admin))
+		// fmt.Printf("type %T, %d\n", admin, admin)
 		//log.Println("checked: ", user["id"], admin)
 		if userModel.CheckPassword(int(admin), password) {
 			Ctx.Next()

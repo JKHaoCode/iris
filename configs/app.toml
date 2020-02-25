@@ -30,8 +30,10 @@ Network = "tcp"
 Addr = "127.0.0.1:6379"
 Password = ""
 Database = ""
-MaxIdle = 0
-MaxActive = 100
 #IdleTimeout service.DefaultRedisIdleTimeout,
 refix=     ""
+Host = "127.0.0.1:6379"
+MaxIdle = 30
+MaxActive = 30
+IdleTimeout = 200
 

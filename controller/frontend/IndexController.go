@@ -5,7 +5,6 @@ import (
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/libs/logging"
-	redis2 "iris/libs/redis"
 	"iris/model"
 	// "github.com/kataras/iris/sessions"
 	"log"
@@ -17,12 +16,17 @@ type IndexController struct {
 	Ctx iris.Context
 	News model.News
 	Comment model.Comment
-	// Session *sessions.Sessions
+	// Session *sessions.Session
 }
 
 func (r *IndexController) Get() mvc.View {
-	redis := redis2.Singleton()
-	log.Println(redis.Get("article", "article"))
+	//redis := r.Session
+	//result := redis.Get("article")
+	//if result != nil {
+	//	log.Println(result)
+	//} else {
+	//	redis.Set("article", 555)
+	//}
 	page, err := strconv.Atoi(r.Ctx.URLParam("page"))
 
 	if err != nil || page < 1 {

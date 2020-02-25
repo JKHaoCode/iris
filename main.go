@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/kataras/iris"
 	"iris/libs/logging"
-	redis2 "iris/libs/redis"
+	"iris/libs/redis"
 
 	// context "github.com/kataras/iris/context"
 	"github.com/kataras/iris/middleware/logger"
@@ -39,8 +39,9 @@ func init() {
 	if config.GetBool("default.sql_log") {
 		libs.DB.LogMode(true)
 	}
-	redis := redis2.Singleton()
-	commons.SessManager.UseDatabase(redis)
+	redis.Setup()
+	//redis := redis2.Singleton()
+	//commons.SessManager.UseDatabase(redis)
 }
 
 func main() {
