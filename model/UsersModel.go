@@ -164,7 +164,7 @@ func (this *Admin)CheckPassword(id int, password string) bool {
 	// admin_user, _ := original.(map[string]interface{})
 	// dbData := .Admin{}
 	admin, err := this.AdminInfo(uint(id))
-	log.Println(admin)
+	// log.Println(admin)
 	if err != nil {
 		// log.Println("err: ", err)
 		return false
@@ -173,4 +173,21 @@ func (this *Admin)CheckPassword(id int, password string) bool {
 		return true
 	}
 	return false
+}
+
+func (this *Admin)ChangeOnline(status int, id uint) bool {
+	db := libs.DB.Table("users")
+	var online int
+	if status == 1 {
+		online = 0
+	} else {
+		online = 1
+	}
+	err := db.Where("id = ?", id).Update("online", online).Error
+	if err != nil {
+		logging.Info("change online off: ", err)
+		return false
+	}
+
+	return true
 }

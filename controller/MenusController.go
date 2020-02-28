@@ -5,7 +5,6 @@ import (
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/model"
-	"log"
 )
 
 var MenusModel = model.Menus{}
@@ -72,7 +71,7 @@ func (c *MenusController) GetUpdateMenuBy(id uint) mvc.View {
 }
 
 func (c *MenusController) PostUpdateMenu() {
-	log.Println(c.Ctx.FormValues())
+	// log.Println(c.Ctx.FormValues())
 	if err := MenusModel.MenusUpdate(c.Ctx.FormValues()); err == nil {
 		c.Ctx.Redirect("/backend/menus")
 	} else {

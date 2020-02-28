@@ -92,11 +92,11 @@ func main() {
 			listToTree := menu.GetMenu(list, 999)
 			admin_id, _ := admin_user["id"].(uint)
 			adminInfo, _ := admin_model.AdminInfo(admin_id)
-			log.Println(adminInfo)
+			// log.Println(adminInfo)
 			if adminInfo.Headico == "" {
 				adminInfo.Headico = "/public/adminlit/dist/img/user2-160x160.jpg"
 			}
-			log.Println(adminInfo)
+			// log.Println(adminInfo)
 			ctx.ViewData("adminInfo", adminInfo)
 			ctx.ViewData("listToTree", listToTree)
 		}

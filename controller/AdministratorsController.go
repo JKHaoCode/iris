@@ -7,8 +7,8 @@ import (
 	"html"
 	"iris/commons"
 	"iris/libs"
+	"iris/libs/logging"
 	"iris/model"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -62,7 +62,7 @@ func (c *AdministratorsController) PostUpdateAdmin() {
 	}
 	var postValues map[string][]string
 	postValues = c.Ctx.FormValues()
-	log.Println(postValues)
+	// log.Println(postValues)
 	admin_id := postValues["id"][0]
 	int_admin_id, _ := strconv.Atoi(admin_id)
 	delete(postValues, "id")
@@ -130,4 +130,31 @@ func (c *AdministratorsController) GetDelAdminBy(id uint) {
 	} else {
 		commons.DefaultErrorShow(err.Error(), c.Ctx)
 	}
+}
+
+func (c *AdministratorsController)PostChangeOnline(ctx iris.Context) model.Admin {
+	user := model.Admin{}
+	err := ctx.ReadJSON(&user)
+	// log.Println("", err, user)
+	if err != nil {
+		logging.Info("ajax: ", err)
+		return model.Admin{}
+	}
+	// log.Println(user.Online, user.ID)
+	status := user.ChangeOnline(user.Online, user.ID)
+
+	if status {
+		if user.Online == 1 {
+			user.Online = 0
+		} else {
+			user.Online = 1
+		}
+		return user
+	}
+
+	return model.Admin{}
+	//condition := c.Ctx.FormValues()
+	//log.Println("参数", condition, ctx)
+	//var online model.Admin
+	//status = online.ChangeOnline(status, id)
 }

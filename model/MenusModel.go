@@ -83,7 +83,7 @@ func (this *Menus) MenusAdd(postValues map[string][]string) error {
 }
 
 func (this *Menus) MenusUpdate(postValues map[string][]string) error {
-	log.Println(postValues)
+	// log.Println(postValues)
 	var menus Menus
 	db := libs.DB
 
@@ -152,5 +152,6 @@ func (m *Menus)GetMenu(menu []Menus, pid int) []TreeList {
 			treeList = append(treeList, node)
 		}
 	}
+	// log.Println(treeList)
 	return treeList
 }

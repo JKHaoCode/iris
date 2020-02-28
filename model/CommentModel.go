@@ -34,7 +34,7 @@ func (this *Comment) List(page int) ([]Comment, int, int){
 func (this *Comment) CommentAdd(postValues map[string][]string) error {
 	var comment Comment
 	db := libs.DB
-	log.Println(postValues)
+	// log.Println(postValues)
 	if err := libs.FormDecode(&comment, postValues); err != nil {
 		libs.LogError.Println(err)
 		log.Println("40", err)
