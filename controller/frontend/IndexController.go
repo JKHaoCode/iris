@@ -5,11 +5,12 @@ import (
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/libs/logging"
+	"iris/libs/redis"
 	"iris/model"
 	// "github.com/kataras/iris/sessions"
-	"log"
 	"strconv"
 	"strings"
+	"encoding/json"
 )
 
 type IndexController struct {
@@ -58,13 +59,39 @@ func (r *IndexController) Get() mvc.View {
 		list[k].TagsName = strings.TrimRight(TagsName, ",")
 	}
 	// log.Println(CategoryList)
+	cacheArticle, err := redis.Get("article" + string(page))
+	var cacheArticles []model.News
+	if len(cacheArticle) == 0 {
+		err := redis.Set("article" + string(page), list, 60)
+		logging.Info(err)
+		if err != nil {
+			logging.Info("错误redis")
+		}
+		return mvc.View{
+			Name:   "frontend/index/index.html",
+			Layout: "shared/layoutFront.html",
+			Data: iris.Map{
+				"Title":   "首页",
+				"Message": "Message 成功了 嘻嘻",
+				"list": list,
+				"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
+				"CategoryList": CategoryList,
+				"TagList": TagList,
+				"NewsNewest": NewsNewest,
+			},
+		}
+	}
+	errs := json.Unmarshal(cacheArticle, &cacheArticles)
+	if errs != nil {
+		logging.Info("json to news", errs)
+	}
 	return mvc.View{
 		Name:   "frontend/index/index.html",
 		Layout: "shared/layoutFront.html",
 		Data: iris.Map{
 			"Title":   "首页",
 			"Message": "Message 成功了 嘻嘻",
-			"list": list,
+			"list": cacheArticles,
 			"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
 			"CategoryList": CategoryList,
 			"TagList": TagList,
@@ -75,7 +102,7 @@ func (r *IndexController) Get() mvc.View {
 
 func (r *IndexController) GetSearch() mvc.View {
 	search := r.Ctx.URLParam("q")
-	log.Println(search)
+	// log.Println(search)
 	searchList := r.News.NewsSearch(search)
 	Category := model.Category{}
 	Tag := model.Tags{}
@@ -130,7 +157,7 @@ func (r *IndexController) GetArticle() mvc.View {
 	}
 
 	list, total, totalPages := r.News.List(page)
-	log.Println(list)
+	logging.Info(list)
 	// NewsNewest := r.News.NewsNewest()
 	Category := model.Category{}
 	Tag := model.Tags{}
@@ -174,7 +201,7 @@ func (r *IndexController) GetArticleBy(id uint) mvc.View {
 		logging.Info(err)
 	}
 
-	log.Println(info.Content)
+	logging.Info(info.Content)
 	CategoryIds := []string{}
 	for _, v := range strings.Split(info.Category_id, ",") {
 		_v, _ := strconv.Atoi(v)

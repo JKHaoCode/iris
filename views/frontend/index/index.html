@@ -38,7 +38,7 @@
         <ul>
             {{range $k, $v := .NewsNewest}}
             <li>
-                <a href="#">{{$v.Title}}</a>
+                <a href="/frontend/article/{{$v.ID}}">{{$v.Title}}</a>
             </li>
             {{end}}
         </ul>
