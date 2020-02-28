@@ -141,12 +141,15 @@ func (this *News) NewsNewest() []News {
 
 }
 
-func (this *News) NewsSearch(search string) []News {
+func (this *News) NewsSearch(search map[string]string) []News {
 	var data = []News{}
 
 	db := libs.DB
 
-	err := db.Where("`news`.`title` like '%"+search+"%'").Limit(10).Find(&data).Error
+	for key, value := range search {
+		db = db.Where("`news`.`"+key+"` like '%"+value+"%'")
+	}
+	err := db.Limit(config.Get("pagination.FrontendPageSize")).Find(&data).Error
 
 	if err != nil {
 		logging.Info("errors: ", err)

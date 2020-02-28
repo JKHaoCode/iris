@@ -47,9 +47,8 @@
         <h3 class="widget-title">分类</h3>
         <ul>
             {{range $k, $v := .CategoryList}}
-
             <li>
-                <a href="#">{{$v.Name}}</a>
+                <a href="/frontend/search?category_id={{$v.ID}}">{{$v.Name}}</a>
             </li>
             {{end}}
         </ul>
@@ -60,7 +59,7 @@
         <ul>
             {{range $i, $k := .TagList}}
             <li>
-                <a href="#">{{$k.Name}}</a>
+                <a href="/frontend/search?tags_id={{$k.ID}}">{{$k.Name}}</a>
             </li>
             {{end}}
         </ul>

@@ -7,10 +7,10 @@ import (
 	"iris/libs/logging"
 	"iris/libs/redis"
 	"iris/model"
+	"encoding/json"
 	// "github.com/kataras/iris/sessions"
 	"strconv"
 	"strings"
-	"encoding/json"
 )
 
 type IndexController struct {
@@ -58,11 +58,12 @@ func (r *IndexController) Get() mvc.View {
 		}
 		list[k].TagsName = strings.TrimRight(TagsName, ",")
 	}
-	// log.Println(CategoryList)
-	cacheArticle, err := redis.Get("article" + string(page))
+	intToString := strconv.Itoa(page)
+	// log.Println("article" + intToString)
+	cacheArticle, err := redis.Get("article" + intToString)
 	var cacheArticles []model.News
 	if len(cacheArticle) == 0 {
-		err := redis.Set("article" + string(page), list, 60)
+		err := redis.Set("article" + intToString, list, 60)
 		logging.Info(err)
 		if err != nil {
 			logging.Info("错误redis")
@@ -83,7 +84,7 @@ func (r *IndexController) Get() mvc.View {
 	}
 	errs := json.Unmarshal(cacheArticle, &cacheArticles)
 	if errs != nil {
-		logging.Info("json to news", errs)
+		logging.Warn("json to news", errs)
 	}
 	return mvc.View{
 		Name:   "frontend/index/index.html",
@@ -101,7 +102,11 @@ func (r *IndexController) Get() mvc.View {
 }
 
 func (r *IndexController) GetSearch() mvc.View {
-	search := r.Ctx.URLParam("q")
+	var search map[string]string
+	search = r.Ctx.URLParams()
+	//if search["q"] {
+	//
+	//}
 	// log.Println(search)
 	searchList := r.News.NewsSearch(search)
 	Category := model.Category{}
