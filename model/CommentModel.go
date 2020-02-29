@@ -15,6 +15,7 @@ type Comment struct {
 	ArticleId uint `gorm:"type:int(10); NOT NULL; DEFAULT 0;"validate:"required"`
 	CommentLikeCount uint `gorm:"type:int(10);DEFAULT 0;"`
 	CommentContent string `gorm:"type:text;DEFAULT '';"validate:"required"`
+	ArticleName string `gorm:"-"`
 }
 
 func (this *Comment) List(page int) ([]Comment, int, int){

@@ -48,4 +48,8 @@ func Routes(app *iris.Application) {
 	mvc.New(app.Party("/backend/menus", middleware.SessionLoginAuth)).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.MenusController))
+	// 评论
+	mvc.New(app.Party("/backend/comments", middleware.SessionLoginAuth)).
+		Register(commons.SessManager.Start).
+		Handle(new(controllers.CommentsController))
 }

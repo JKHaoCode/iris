@@ -5,6 +5,8 @@ import (
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/model"
+
+	"log"
 )
 
 var MenusModel = model.Menus{}
@@ -57,6 +59,7 @@ func (c *MenusController) GetUpdateMenuBy(id uint) mvc.View {
 	}
 	Menu := model.Menus{}
 	list := Menu.List()
+	log.Println(list)
 	model.ListMenusTree = []model.Menus{}
 	list = Menu.GetTree(list, 0, 0)
 
