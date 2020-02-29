@@ -258,6 +258,24 @@ func (r *IndexController) PostComment() {
 	}
 }
 
+func (r *IndexController) PostCommentLike(ctx iris.Context) model.Comment{
+	comment := model.Comment{}
+	err := ctx.ReadJSON(&comment)
+
+	status := comment.ChangeCommentLike(comment.CommentLikeCount, comment.ID)
+	if err != nil {
+		logging.Info("comment ajax: ", err)
+		return model.Comment{}
+	}
+
+	if status {
+		return comment
+	}
+
+	return model.Comment{}
+
+}
+
 //func (c *NewsController) PostAddNews() {
 //	if err := c.News.NewsAdd(c.Ctx.FormValues()); err == nil {
 //		c.Ctx.Redirect("/backend/news")
