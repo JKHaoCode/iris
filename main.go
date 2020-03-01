@@ -118,7 +118,7 @@ func main() {
 	route.Routes(app)
 
 	//应用配置文件
-				app.Configure(iris.WithConfiguration(iris.YAML("./configs/iris.yml")))
+	app.Configure(iris.WithConfiguration(iris.YAML("./configs/iris.yml")))
 
 	//Run
 	www := app.Party("www.")

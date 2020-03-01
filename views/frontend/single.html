@@ -42,7 +42,7 @@
             <ul class="comment-list list-unstyled">
                 {{range $k, $v := .CommentList}}
                 <li class="comment-item">
-                    <span class="nickname"><a href="javascript:;" onclick="changeComment({{$v}})">赞 <i class="fa fa-thumbs-up"></i></a>({{$v.CommentLikeCount}})</span>
+                    <span class="nickname"><a href="javascript:;" onclick="changeComment({{$v}})">赞 <i class="fa fa-thumbs-o-up"></i></a>({{$v.CommentLikeCount}})</span>
                     {{/*<span class="nickname"><a href="javascript:;">不赞 <i class="fa fa-thumbs-down"></i></a>({{$v.CommentLikeCount}})</span>*/}}
                     <span class="nickname">
                         {{if $v.UserId}}

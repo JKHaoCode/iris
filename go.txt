@@ -61,3 +61,84 @@ go mod init: 初始化modules
     go list -m： 查看主模块的路径
     go list -m -f={{.Dir}}： 查看主模块的根目录
     go list -m all： 查看当前的依赖和版本信息
+
+
+go 的内置函数
+
+go 的内置函数不拥有前面提到的go的标准类型，因此内置函数不能作为一个函数值赋值给函数类型的变量。
+
+close
+close用于关闭一个channel，使用close函数要注意以下几点：
+
+关闭一个只接受的channel会导致错误
+在一个已经关闭的channel上发送数据会导致panic
+关闭一个nil channel会导致panic
+在一个channel关闭之后，如果channel已经没有剩余数据等待接受了，这时候如果继续接收，会返回一个channel对应数据类型的nil value，如果接收的时候使用多返回值，第二个参数表示一个channel是否已经关闭。
+len和cap
+len和cap都接收多种类型的参数，返回值是int类型，具体接收哪些类型的参数以及返回的值的含义见下表
+
+方法	参数	结果
+len(s)	string	字符串的字节长度
+[n]T *[n]T	数组的长度（==n）
+[]T	slice的长度
+map[K][T]	map的长度，即有多少个key-value对
+chan T	在channel里面有多少个等待接收的元素
+cap(s)	[n]T *[n]T	数组长度（==n）
+[]T	slice的capacity（预分配空间）
+chan T	channel的buffer的长度
+len，cap的返回值满足如下条件：
+0<=len(s)<=cap(s)
+slice,map,channel的nil值的len为0
+slice,channel的nil值的cap为0
+
+new
+new函数的参数是一个类型，返回一个指向该类型的指针，并且进行0值初始化
+
+call	type	result
+make(T, n)	slice	创建一个T类型的slice且长度为n
+make(T, n, m)	slice	创建一个T类型的slice且长度为n，capacity位m
+make(T)	map	创建一个T类型的map
+make(T, n)	map	创建一个T类型的map，且预分配n个空间
+make(T)	channel	创一个channel
+make(T, n)	channel	创建一个拥有n长度的buffer的channel
+m>=n，且n和m必须是整型且不能为负数。
+
+make
+make也根据不同参数类型和参数个数具有不同的含义，见下表
+
+append
+append(s S, x …T) S
+在slice后面追加元素，返回一个新的slice，新的slice可能指向不同的underlying array，所以调用append的时候一定要将其返回值赋值给slice，保证得到append之后的slice。
+s = append(s, a)
+
+copy
+copy(dst, src, []T) int
+copy(dst []byte, src string) int
+copy返回拷贝的长度，会自动取最短的长度进行拷贝(min(len(src), len(dst)))
+
+delete
+删除一个map指定key的元素
+delete(m, k)
+
+panic,recover
+panic(interface{})
+直接调用panic或者是一个运行panic都会结束本次函数调用，函数中的defer将会被正常执行，panic如果不被recover将会导致程序崩溃
+recover() interface{}
+在defer的函数中调用recover，可以将调用defer的后面的函数体的panic恢复。
+
+func protect(g func()) {
+    defer func() {
+        if x := recover(); x != nil {
+            fmt.Println("run time panic:%v"x)
+        }
+    }()
+    g()
+}
+1
+2
+3
+4
+5
+6
+7
+8

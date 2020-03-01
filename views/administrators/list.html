@@ -18,7 +18,7 @@
                     </tr>
                     {{range $i, $v := .list}}
                     <tr>
-                        <td>{{$i | AddKey}}</td>
+                        <td>{{$v.ID}}</td>
                         <td>{{$v.Account}}</td>
                         <td>{{$v.Nickname}}</td>
                         <td>{{$v.Email}}</td>

@@ -19,7 +19,7 @@
                     </tr>
                     {{range $i, $v := .list}}
                     <tr>
-                        <td>{{$i | AddKey}}</td>
+                        <td>{{$v.ID}}</td>
                         <td>{{$v.Title}}</td>
                         <td>{{$v.CategoryName}}</td>
                         <td>{{$v.TagsName}}</td>
