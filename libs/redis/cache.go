@@ -10,6 +10,7 @@ import (
 )
 
 var RedisConn *redis.Pool
+
 // .DefaultRedisIdleTimeout
 func Setup() error {
 	RedisConn = &redis.Pool{
