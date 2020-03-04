@@ -132,7 +132,7 @@ func (c *AdministratorsController) GetDelAdminBy(id uint) {
 	}
 }
 
-func (c *AdministratorsController)PostChangeOnline(ctx iris.Context) model.Admin {
+func (c *AdministratorsController) PostChangeOnline(ctx iris.Context) model.Admin {
 	user := model.Admin{}
 	err := ctx.ReadJSON(&user)
 	// log.Println("", err, user)

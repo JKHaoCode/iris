@@ -1,21 +1,21 @@
 package frontend
 
 import (
+	"encoding/json"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/libs/logging"
 	"iris/libs/redis"
 	"iris/model"
-	"encoding/json"
 	// "github.com/kataras/iris/sessions"
 	"strconv"
 	"strings"
 )
 
 type IndexController struct {
-	Ctx iris.Context
-	News model.News
+	Ctx     iris.Context
+	News    model.News
 	Comment model.Comment
 	// Session *sessions.Session
 }
@@ -63,7 +63,7 @@ func (r *IndexController) Get() mvc.View {
 	cacheArticle, err := redis.Get("article" + intToString)
 	var cacheArticles []model.News
 	if len(cacheArticle) == 0 {
-		err := redis.Set("article" + intToString, list, 60)
+		err := redis.Set("article"+intToString, list, 60)
 		logging.Info(err)
 		if err != nil {
 			logging.Info("错误redis")
@@ -72,13 +72,13 @@ func (r *IndexController) Get() mvc.View {
 			Name:   "frontend/index/index.html",
 			Layout: "shared/layoutFront.html",
 			Data: iris.Map{
-				"Title":   "首页",
-				"Message": "Message 成功了 嘻嘻",
-				"list": list,
-				"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
+				"Title":        "首页",
+				"Message":      "Message 成功了 嘻嘻",
+				"list":         list,
+				"PageHtml":     commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
 				"CategoryList": CategoryList,
-				"TagList": TagList,
-				"NewsNewest": NewsNewest,
+				"TagList":      TagList,
+				"NewsNewest":   NewsNewest,
 			},
 		}
 	}
@@ -90,13 +90,13 @@ func (r *IndexController) Get() mvc.View {
 		Name:   "frontend/index/index.html",
 		Layout: "shared/layoutFront.html",
 		Data: iris.Map{
-			"Title":   "首页",
-			"Message": "Message 成功了 嘻嘻",
-			"list": cacheArticles,
-			"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
+			"Title":        "首页",
+			"Message":      "Message 成功了 嘻嘻",
+			"list":         cacheArticles,
+			"PageHtml":     commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
 			"CategoryList": CategoryList,
-			"TagList": TagList,
-			"NewsNewest": NewsNewest,
+			"TagList":      TagList,
+			"NewsNewest":   NewsNewest,
 		},
 	}
 }
@@ -138,18 +138,18 @@ func (r *IndexController) GetSearch() mvc.View {
 		Data: iris.Map{
 			"Title":   "查询结果",
 			"Message": "Message 成功了 嘻嘻",
-			"list": searchList,
+			"list":    searchList,
 			//"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
 			"CategoryList": CategoryList,
-			"TagList": TagList,
-			"NewsNewest": NewsNewest,
+			"TagList":      TagList,
+			"NewsNewest":   NewsNewest,
 		},
 	}
 }
 
-func (r *IndexController) GetAbout() mvc.View{
+func (r *IndexController) GetAbout() mvc.View {
 	return mvc.View{
-		Name: "frontend/about.html",
+		Name:   "frontend/about.html",
 		Layout: "shared/layoutFront.html",
 	}
 }
@@ -187,11 +187,11 @@ func (r *IndexController) GetArticle() mvc.View {
 		list[k].TagsName = strings.TrimRight(TagsName, ",")
 	}
 	return mvc.View{
-		Name: "frontend/full-width.html",
+		Name:   "frontend/full-width.html",
 		Layout: "shared/layoutFront.html",
 		Data: iris.Map{
-			"Title":   "博客",
-			"list": list,
+			"Title":    "博客",
+			"list":     list,
 			"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
 			//"CategoryList": CategoryList,
 			//"TagList": TagList,
@@ -232,15 +232,14 @@ func (r *IndexController) GetArticleBy(id uint) mvc.View {
 
 	CommentList := r.Comment.CommentSearch(id)
 
-
 	return mvc.View{
-		Name: "frontend/single.html",
+		Name:   "frontend/single.html",
 		Layout: "shared/layoutFront.html",
 		Data: iris.Map{
-			"Title": "文章详情",
-			"Info": info,
+			"Title":       "文章详情",
+			"Info":        info,
 			"CategoryIds": CategoryIds,
-			"tagIds": tagIds,
+			"tagIds":      tagIds,
 			"CommentList": CommentList,
 		},
 	}
@@ -258,7 +257,7 @@ func (r *IndexController) PostComment() {
 	}
 }
 
-func (r *IndexController) PostCommentLike(ctx iris.Context) model.Comment{
+func (r *IndexController) PostCommentLike(ctx iris.Context) model.Comment {
 	comment := model.Comment{}
 	err := ctx.ReadJSON(&comment)
 
