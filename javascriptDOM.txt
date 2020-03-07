@@ -1,0 +1,142 @@
+获取DOM
+document.getElementById("") // id
+getElementsByTagName("") // 标签
+document.getElementsByClassName // class
+
+DOM HTML
+document.getElementById(id).innerHTML=新的 HTML  // 更改或获取
+
+DOM CSS
+document.getElementById('p1').style="样式"
+
+onmouseover="mOver(this)" onmouseout="mOut(this)"  // onmouseover 和 onmouseout 事件可用于在用户的鼠标移至 HTML 元素上方或移出元素时触发函数。
+onmousedown、onmouseup 以及 onclick 事件
+
+DOM 增加click事件
+document.getElementById("myBtn").addEventListener("click", displayDate);
+addEventListener() 方法用于向指定元素添加事件句柄。
+addEventListener() 方法添加的事件句柄不会覆盖已存在的事件句柄。
+你可以向一个元素添加多个事件句柄。
+你可以向同个元素添加多个同类型的事件句柄，如：两个 "click" 事件。
+你可以向任何 DOM 对象添加事件监听，不仅仅是 HTML 元素。如： window 对象。
+addEventListener() 方法可以更简单的控制事件（冒泡与捕获）。
+当你使用 addEventListener() 方法时, JavaScript 从 HTML 标记中分离开来，可读性更强， 在没有控制HTML标记时也可以添加事件监听。
+你可以使用 removeEventListener() 方法来移除事件的监听。
+removeEventListener() 方法
+removeEventListener() 方法移除由 addEventListener() 方法添加的事件句柄:
+
+JavaScript 操作HTML
+document.activeElement  返回当前获取焦点元素
+document.addEventListener() 向文档添加句柄
+document.adoptNode(node)    从另外一个文档返回 adapded 节点到当前文档。
+document.anchors    返回对文档中所有 Anchor 对象的引用。
+document.applets
+返回对文档中所有 Applet 对象的引用。
+
+注意: HTML5 已不支持 <applet> 元素。
+
+document.baseURI    返回文档的绝对基础 URI
+document.body   返回文档的body元素
+document.close()    关闭用 document.open() 方法打开的输出流，并显示选定的数据。
+document.cookie 设置或返回与当前文档有关的所有 cookie。
+document.createAttribute()  创建一个属性节点
+document.createComment()    createComment() 方法可创建注释节点。
+document.createDocumentFragment()   创建空的 DocumentFragment 对象，并返回此对象。
+document.createElement()    创建元素节点。
+document.createTextNode()   创建文本节点。
+document.doctype    返回与文档相关的文档类型声明 (DTD)。
+document.documentElement    返回文档的根节点
+document.documentMode   返回用于通过浏览器渲染文档的模式
+document.documentURI    设置或返回文档的位置
+document.domain 返回当前文档的域名。
+document.domConfig  已废弃。返回 normalizeDocument() 被调用时所使用的配置。
+document.embeds 返回文档中所有嵌入的内容（embed）集合
+document.forms  返回对文档中所有 Form 对象引用。
+document.getElementsByClassName()   返回文档中所有指定类名的元素集合，作为 NodeList 对象。
+document.getElementById()   返回对拥有指定 id 的第一个对象的引用。
+document.getElementsByName()    返回带有指定名称的对象集合。
+document.getElementsByTagName() 返回带有指定标签名的对象集合。
+document.images 返回对文档中所有 Image 对象引用。
+document.implementation 返回处理该文档的 DOMImplementation 对象。
+document.importNode()   把一个节点从另一个文档复制到该文档以便应用。
+document.inputEncoding  返回用于文档的编码方式（在解析时）。
+document.lastModified   返回文档被最后修改的日期和时间。
+document.links  返回对文档中所有 Area 和 Link 对象引用。
+document.normalize()    删除空文本节点，并连接相邻节点
+document.normalizeDocument()    删除空文本节点，并连接相邻节点的
+document.open() 打开一个流，以收集来自任何 document.write() 或 document.writeln() 方法的输出。
+document.querySelector()    返回文档中匹配指定的CSS选择器的第一元素
+document.querySelectorAll() document.querySelectorAll() 是 HTML5中引入的新方法，返回文档中匹配的CSS选择器的所有元素节点列表
+document.readyState 返回文档状态 (载入中……)
+document.referrer   返回载入当前文档的文档的 URL。
+document.removeEventListener()  移除文档中的事件句柄(由 addEventListener() 方法添加)
+document.renameNode()   重命名元素或者属性节点。
+document.scripts    返回页面中所有脚本的集合。
+document.strictErrorChecking    设置或返回是否强制进行错误检查。
+document.title  返回当前文档的标题。
+document.URL    返回文档完整的URL
+document.write()    向文档写 HTML 表达式 或 JavaScript 代码。
+document.writeln()  等同于 write() 方法，不同的是在每个表达式之后写一个换行符。
+
+
+js 添加额外元素
+JavaScript prototype（原型对象）
+.prototype.nationality
+
+// js 秒表
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+    <form>
+
+   <input type="button" value="开始计时!" onclick="start()" />
+
+   <input type="text" id="txt" />
+
+   <input type="button" value="停止!" onclick="stop()" />
+
+</form>
+</body>
+
+</html>
+<script>
+var c=0;
+
+  var t;
+
+  var timer_is_on=0;
+
+  function timedCount(){
+
+   document.getElementById('txt').value=c;
+
+   c=c+1;
+
+   t=setTimeout(function(){timedCount()},1000);
+
+  }
+
+  function start(){
+
+   if (!timer_is_on){
+
+    timer_is_on=1;
+
+    timedCount();
+
+   }
+
+  }
+
+  function stop(){
+
+   clearTimeout(t);
+
+   timer_is_on=0;
+
+  }
+</script>

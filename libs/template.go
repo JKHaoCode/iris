@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// html 使用的函数
 //时间戳转换为日期
 func TimeToDate(t time.Time) string {
 	return t.Format("2006-01-02 15:04:05")

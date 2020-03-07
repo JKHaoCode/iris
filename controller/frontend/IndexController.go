@@ -1,21 +1,21 @@
 package frontend
 
 import (
+	"encoding/json"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/libs/logging"
 	"iris/libs/redis"
 	"iris/model"
-	"encoding/json"
 	// "github.com/kataras/iris/sessions"
 	"strconv"
 	"strings"
 )
 
 type IndexController struct {
-	Ctx iris.Context
-	News model.News
+	Ctx     iris.Context
+	News    model.News
 	Comment model.Comment
 	// Session *sessions.Session
 }
@@ -34,51 +34,53 @@ func (r *IndexController) Get() mvc.View {
 		page = 1
 	}
 
-	list, total, totalPages := r.News.List(page)
 	NewsNewest := r.News.NewsNewest()
 	Category := model.Category{}
 	Tag := model.Tags{}
 	CategoryList := Category.ListFrontend()
 	TagList := Tag.ListAll()
-	for k, v := range list {
-		CategoryName := ""
-		if val, err := Category.CategoryMoreInfo(v.Category_id); err == nil {
-			for _, vv := range val {
-				CategoryName += vv.Name + ","
-			}
-		}
-		list[k].CategoryName = strings.TrimRight(CategoryName, ",")
-	}
-	for k, v := range list {
-		TagsName := ""
-		if val, err := Tag.TagsMoreInfo(v.Tags_id); err == nil {
-			for _, vv := range val {
-				TagsName += vv.Name + ","
-			}
-		}
-		list[k].TagsName = strings.TrimRight(TagsName, ",")
-	}
 	intToString := strconv.Itoa(page)
 	// log.Println("article" + intToString)
-	cacheArticle, err := redis.Get("article" + intToString)
+	cacheArticle, _ := redis.Get("article" + intToString)
 	var cacheArticles []model.News
 	if len(cacheArticle) == 0 {
-		err := redis.Set("article" + intToString, list, 60)
-		logging.Info(err)
-		if err != nil {
-			logging.Info("错误redis")
+		list, total, totalPages := r.News.List(page)
+		for k, v := range list {
+			CategoryName := ""
+			if val, err := Category.CategoryMoreInfo(v.Category_id); err == nil {
+				for _, vv := range val {
+					CategoryName += vv.Name + ","
+				}
+			}
+			list[k].CategoryName = strings.TrimRight(CategoryName, ",")
 		}
+		for k, v := range list {
+			TagsName := ""
+			if val, err := Tag.TagsMoreInfo(v.Tags_id); err == nil {
+				for _, vv := range val {
+					TagsName += vv.Name + ","
+				}
+			}
+			list[k].TagsName = strings.TrimRight(TagsName, ",")
+		}
+		err := redis.Set("article"+intToString, list, 3600)
+		if err != nil {
+			logging.Info(err)
+			logging.Info("news list 错误redis")
+		}
+		redis.Set("total"+intToString, total, 3600)
+		redis.Set("totalPages"+intToString, totalPages, 3600)
 		return mvc.View{
 			Name:   "frontend/index/index.html",
 			Layout: "shared/layoutFront.html",
 			Data: iris.Map{
-				"Title":   "首页",
-				"Message": "Message 成功了 嘻嘻",
-				"list": list,
-				"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
+				"Title":        "首页",
+				"Message":      "Message 成功了 嘻嘻",
+				"list":         list,
+				"PageHtml":     commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
 				"CategoryList": CategoryList,
-				"TagList": TagList,
-				"NewsNewest": NewsNewest,
+				"TagList":      TagList,
+				"NewsNewest":   NewsNewest,
 			},
 		}
 	}
@@ -86,17 +88,22 @@ func (r *IndexController) Get() mvc.View {
 	if errs != nil {
 		logging.Warn("json to news", errs)
 	}
+	total, _ := redis.Get("total" + intToString)
+	totalPages, _ := redis.Get("totalPages" + intToString)
+	var cacheTotalPages, cacheTotal int
+	json.Unmarshal(total, &cacheTotal)
+	json.Unmarshal(totalPages, &cacheTotalPages)
 	return mvc.View{
 		Name:   "frontend/index/index.html",
 		Layout: "shared/layoutFront.html",
 		Data: iris.Map{
-			"Title":   "首页",
-			"Message": "Message 成功了 嘻嘻",
-			"list": cacheArticles,
-			"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
+			"Title":        "首页",
+			"Message":      "Message 成功了 嘻嘻",
+			"list":         cacheArticles,
+			"PageHtml":     commons.GetPageHtml(cacheTotalPages, page, cacheTotal, r.Ctx.Path()),
 			"CategoryList": CategoryList,
-			"TagList": TagList,
-			"NewsNewest": NewsNewest,
+			"TagList":      TagList,
+			"NewsNewest":   NewsNewest,
 		},
 	}
 }
@@ -136,20 +143,20 @@ func (r *IndexController) GetSearch() mvc.View {
 		Name:   "frontend/index/index.html",
 		Layout: "shared/layoutFront.html",
 		Data: iris.Map{
-			"Title":   "查询结果",
-			"Message": "Message 成功了 嘻嘻",
-			"list": searchList,
-			//"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
+			"Title":        "查询结果",
+			"Message":      "Message 成功了 嘻嘻",
+			"list":         searchList,
 			"CategoryList": CategoryList,
-			"TagList": TagList,
-			"NewsNewest": NewsNewest,
+			"TagList":      TagList,
+			"NewsNewest":   NewsNewest,
+			//"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
 		},
 	}
 }
 
-func (r *IndexController) GetAbout() mvc.View{
+func (r *IndexController) GetAbout() mvc.View {
 	return mvc.View{
-		Name: "frontend/about.html",
+		Name:   "frontend/about.html",
 		Layout: "shared/layoutFront.html",
 	}
 }
@@ -187,11 +194,11 @@ func (r *IndexController) GetArticle() mvc.View {
 		list[k].TagsName = strings.TrimRight(TagsName, ",")
 	}
 	return mvc.View{
-		Name: "frontend/full-width.html",
+		Name:   "frontend/full-width.html",
 		Layout: "shared/layoutFront.html",
 		Data: iris.Map{
-			"Title":   "博客",
-			"list": list,
+			"Title":    "博客",
+			"list":     list,
 			"PageHtml": commons.GetPageHtml(totalPages, page, total, r.Ctx.Path()),
 			//"CategoryList": CategoryList,
 			//"TagList": TagList,
@@ -232,15 +239,14 @@ func (r *IndexController) GetArticleBy(id uint) mvc.View {
 
 	CommentList := r.Comment.CommentSearch(id)
 
-
 	return mvc.View{
-		Name: "frontend/single.html",
+		Name:   "frontend/single.html",
 		Layout: "shared/layoutFront.html",
 		Data: iris.Map{
-			"Title": "文章详情",
-			"Info": info,
+			"Title":       "文章详情",
+			"Info":        info,
 			"CategoryIds": CategoryIds,
-			"tagIds": tagIds,
+			"tagIds":      tagIds,
 			"CommentList": CommentList,
 		},
 	}
@@ -258,7 +264,7 @@ func (r *IndexController) PostComment() {
 	}
 }
 
-func (r *IndexController) PostCommentLike(ctx iris.Context) model.Comment{
+func (r *IndexController) PostCommentLike(ctx iris.Context) model.Comment {
 	comment := model.Comment{}
 	err := ctx.ReadJSON(&comment)
 
