@@ -3,10 +3,10 @@ host = "127.0.0.1"
 port = "3306"
 database = "go_blog"
 user = "root"
-password = ""
+password = "root"
 charset = "utf8"
 # sql 语句
-sql_log = false
+sql_log = true
 
 MaxIdleConns = 10 #空闲时最大的连接数
 MaxOpenConns = 100 #最大的连接数
