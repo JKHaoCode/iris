@@ -79,6 +79,7 @@ func main() {
 	//并将请求记录到终端。
 	app.Use(recover.New())
 	app.Use(logger.New())
+	app.Use(libs.Cors)
 
 	app.StaticWeb("/public", "./public")   //设置静态文件目录
 	app.StaticWeb("/uploads", "./uploads") //设置静态文件目录
@@ -128,7 +129,7 @@ func main() {
 			www.Handle(r.Method, r.Tmpl().Src, r.Handlers...)
 		}
 	}
-	err := app.Run(iris.Addr(config.GetString("server.domain") + ":" + config.GetString("server.port")))
+	err := app.Run(iris.Addr(config.GetString("server.domain") + ":" + config.GetString("server.port")), iris.WithoutServerError(iris.ErrServerClosed))
 	if err != nil {
 		log.Fatalf("服务启动失败,错误代码 %s", err)
 	}

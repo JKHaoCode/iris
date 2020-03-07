@@ -28,6 +28,7 @@ func (c *DbConfig) InitDB() *gorm.DB {
 		log.Panic(err)
 		os.Exit(-1)
 	}
+	// db.LogMode(config.GetBool("site.DblogerModel"))
 	db.SingularTable(true)                  //全局设置表名不可以为复数形式。
 	db.DB().SetMaxIdleConns(c.MaxIdleConns) //空闲时最大的连接数
 	db.DB().SetMaxOpenConns(c.MaxOpenConns) //最大的连接数
