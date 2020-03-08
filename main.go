@@ -129,7 +129,7 @@ func main() {
 			www.Handle(r.Method, r.Tmpl().Src, r.Handlers...)
 		}
 	}
-	err := app.Run(iris.Addr(config.GetString("server.domain") + ":" + config.GetString("server.port")), iris.WithoutServerError(iris.ErrServerClosed))
+	err := app.Run(iris.Addr(config.GetString("server.domain") + ":" + config.GetString("server.port")))
 	if err != nil {
 		log.Fatalf("服务启动失败,错误代码 %s", err)
 	}

@@ -25,31 +25,64 @@ func Routes(app *iris.Application) {
 		Handle(new(controllers.LoginController))
 
 	//系统路由
-	mvc.New(app.Party("/backend/system", middleware.SessionLoginAuth)).
+	//mvc.New(app.Party("/backend/system", middleware.SessionLoginAuth)).
+	//	Register(commons.SessManager.Start).
+	//	Handle(new(controllers.SystemController))
+	////管理员管理
+	//mvc.New(app.Party("/backend/administrators", middleware.SessionLoginAuth)).
+	//	Register(commons.SessManager.Start).
+	//	Handle(new(controllers.AdministratorsController))
+	////分类管理
+	//mvc.New(app.Party("/backend/categorys", middleware.SessionLoginAuth)).
+	//	Register(commons.SessManager.Start).
+	//	Handle(new(controllers.CategorysController))
+	////内容管理
+	//mvc.New(app.Party("/backend/news", middleware.SessionLoginAuth)).
+	//	Register(commons.SessManager.Start).
+	//	Handle(new(controllers.NewsController))
+	//// 标签管理
+	//mvc.New(app.Party("/backend/tags", middleware.SessionLoginAuth)).
+	//	Register(commons.SessManager.Start).
+	//	Handle(new(controllers.TagsController))
+	//// 菜单
+	//mvc.New(app.Party("/backend/menus", middleware.SessionLoginAuth)).
+	//	Register(commons.SessManager.Start).
+	//	Handle(new(controllers.MenusController))
+	//// 评论
+	//mvc.New(app.Party("/backend/comments", middleware.SessionLoginAuth)).
+	//	Register(commons.SessManager.Start).
+	//	Handle(new(controllers.CommentsController))
+
+	// 分组
+	// 后台
+	//系统路由
+	router := app.Party("/backend", middleware.SessionLoginAuth)
+	mvc.New(router.Party("/system")).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.SystemController))
 	//管理员管理
-	mvc.New(app.Party("/backend/administrators", middleware.SessionLoginAuth)).
+	mvc.New(router.Party("/administrators")).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.AdministratorsController))
 	//分类管理
-	mvc.New(app.Party("/backend/categorys", middleware.SessionLoginAuth)).
+	mvc.New(router.Party("/categorys")).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.CategorysController))
 	//内容管理
-	mvc.New(app.Party("/backend/news", middleware.SessionLoginAuth)).
+	mvc.New(router.Party("/news")).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.NewsController))
 	// 标签管理
-	mvc.New(app.Party("/backend/tags", middleware.SessionLoginAuth)).
+	mvc.New(router.Party("/tags")).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.TagsController))
 	// 菜单
-	mvc.New(app.Party("/backend/menus", middleware.SessionLoginAuth)).
+	mvc.New(router.Party("/menus")).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.MenusController))
 	// 评论
-	mvc.New(app.Party("/backend/comments", middleware.SessionLoginAuth)).
+	mvc.New(router.Party("/comments")).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.CommentsController))
+
 }
