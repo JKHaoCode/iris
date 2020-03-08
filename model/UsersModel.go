@@ -45,13 +45,13 @@ func (this *Admin) List(page int) ([]Admin, int, int) {
 
 func (this *Admin) AdminLogin(account string, password string) (Admin, error) {
 	if account == "" || password == "" {
-		return Admin{}, errors.New("帐号或密码为空")
+		return Admin{}, errors.New("帐号或密码不能为空")
 	}
 	db := libs.DB.Table("users")
 	var admin Admin
 	has := md5.Sum([]byte(password))
 	md5_password := fmt.Sprintf("%x", has) //将[]byte转成16进制
-	if err := db.Where("account = ?", account).Where("password = ?", md5_password).First(&admin).RecordNotFound(); err {
+	if err := db.Model("Admin").Where("account = ?", account).Where("password = ?", md5_password).First(&admin).RecordNotFound(); err {
 		logging.Info("登录错误： 没有查到", err)
 		return Admin{}, errors.New("帐号或密码错误")
 	}
