@@ -16,6 +16,8 @@ import (
 	"log"
 	"strconv"
 	"time"
+	// "os"
+	// "os/signal"
 )
 
 func init() {
@@ -64,7 +66,6 @@ func main() {
 		app.Logger().SetLevel("debug") //设置debug
 		tmpl.Reload(true)
 	}
-
 
 	tmpl.AddFunc("TimeToDate", libs.TimeToDate) // 为html 页面增加func
 	tmpl.AddFunc("strToHtml", libs.StrToHtml)   // 为html 页面增加func 用法{{.created_at | func}}
@@ -120,7 +121,6 @@ func main() {
 
 	//应用配置文件
 	app.Configure(iris.WithConfiguration(iris.YAML("./configs/iris.yml")))
-
 	//Run
 	www := app.Party("www.")
 	{
@@ -129,8 +129,21 @@ func main() {
 			www.Handle(r.Method, r.Tmpl().Src, r.Handlers...)
 		}
 	}
+
 	err := app.Run(iris.Addr(config.GetString("server.domain") + ":" + config.GetString("server.port")))
 	if err != nil {
 		log.Fatalf("服务启动失败,错误代码 %s", err)
 	}
+	// go func() {
+	// 	err := app.Run(iris.Addr(config.GetString("server.domain") + ":" + config.GetString("server.port")))
+	// 	if err != nil {
+	// 		log.Fatalf("服务启动失败,错误代码 %s", err)
+	// 	}
+	// }()
+
+	// quit := make(chan os.Signal)
+	// signal.Notify(quit, os.Interrupt)
+	// <-quit
+	// log.Println("closing database connection")
+	// eng
 }
