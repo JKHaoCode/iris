@@ -4,13 +4,14 @@ import (
 	"github.com/kataras/iris/context"
 	"iris/commons"
 	"iris/model"
+	"log"
 )
 
 // var session *sessions.Session
 
 func SessionLoginAuth(Ctx context.Context) {
 	auth := commons.SessManager.Start(Ctx).Get("admin_user")
-
+	log.Println(auth)
 	if auth != nil {
 		var userModel model.Admin
 		user, _ := auth.(map[string]interface{})

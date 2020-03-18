@@ -7,7 +7,7 @@ password = ""
 # password = "root"
 charset = "utf8"
 # sql 语句
-sql_log = true
+sql_log = false
 
 MaxIdleConns = 10 #空闲时最大的连接数
 MaxOpenConns = 100 #最大的连接数

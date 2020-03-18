@@ -18,6 +18,7 @@ import (
 	"time"
 	// "os"
 	// "os/signal"
+	// "fmt"
 )
 
 func init() {
@@ -47,6 +48,7 @@ func init() {
 }
 
 func main() {
+	// fmt.Printf("%T\n", config.GetInt64("site.SessionExpires"))
 	app := iris.New()
 	app.Get("/", func(ctx iris.Context) {
 		ctx.Redirect("/frontend")
