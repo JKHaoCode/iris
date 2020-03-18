@@ -12,6 +12,7 @@ import (
 	"iris/model"
 	"strings"
 	"sync"
+	"time"
 )
 
 type LoginController struct {
@@ -47,6 +48,7 @@ func (c *LoginController) Post() {
 		sessionInfo["id"] = adminInfo.ID
 		sessionInfo["name"] = adminInfo.Account
 		sessionInfo["password"] = adminInfo.Password
+		sessionInfo["time"] = time.Now().Unix()
 		c.Session.Set("admin_user", sessionInfo)
 		c.Ctx.Redirect("/backend/system/main")
 	} else {

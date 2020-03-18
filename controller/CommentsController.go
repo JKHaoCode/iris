@@ -10,7 +10,7 @@ import (
 )
 
 type CommentsController struct {
-	Ctx iris.Context
+	Ctx          iris.Context
 	CommentModel model.Comment
 }
 
@@ -23,7 +23,7 @@ func (c *CommentsController) Get() mvc.View {
 	var artile model.News
 	comment := model.Comment{}
 	list, total, totalPages := comment.List(page)
-	log.Println(list)
+	// log.Println(list)
 
 	for k, v := range list {
 		ArticleName := ""
@@ -35,8 +35,8 @@ func (c *CommentsController) Get() mvc.View {
 	return mvc.View{
 		Name: "comment/list.html",
 		Data: iris.Map{
-			"Title": "评论列表",
-			"list": list,
+			"Title":    "评论列表",
+			"list":     list,
 			"PageHtml": commons.GetPageHtml(totalPages, page, total, c.Ctx.Path()),
 		},
 	}
