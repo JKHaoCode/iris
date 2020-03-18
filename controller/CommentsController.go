@@ -5,7 +5,7 @@ import (
 	"github.com/kataras/iris/mvc"
 	"iris/commons"
 	"iris/model"
-	"log"
+	// "log"
 	"strconv"
 )
 

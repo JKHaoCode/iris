@@ -13,13 +13,13 @@ import (
 	"log"
 	"os"
 	"path"
-	"strconv"
+	// "strconv"
 	"strings"
 )
 
 func UploadFile(key string, Ctx iris.Context) (bool, string) {
 	file, info, err := Ctx.FormFile(key)
-	log.Println("file info err is", file, info, err)
+	// log.Println("file info err is", file, info, err)
 	if file == nil {
 		return true, ""
 	}
@@ -36,7 +36,7 @@ func UploadFile(key string, Ctx iris.Context) (bool, string) {
 		if info.Size > config.GetInt64("site.UploadSize")*1024*1024 { // author 少加了site viper 看配置
 			return false, "Error while uploading: UploadSize ToMax"
 		}
-		fname := strconv.Itoa(commons.GenerateRangeNum(100, 9999)) + "_" + info.Filename
+		fname := commons.GenerateRangeNum(info.Filename) + "_" + info.Filename
 
 		fileSuffix := path.Ext(fname)
 

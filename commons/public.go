@@ -1,11 +1,12 @@
 package commons
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/mvc"
 	"github.com/kataras/iris/sessions"
 	config "github.com/spf13/viper"
-	"math/rand"
 	"strconv"
 	"time"
 )
@@ -26,13 +27,14 @@ var SessManager = sessions.New(sessions.Config{
 })
 
 /*获取随机整数*/
-func GenerateRangeNum(min int, max int) int {
-	if min == max {
-		return min
+func GenerateRangeNum(str string) string {
+	m5 := md5.New()
+	_, err := m5.Write([]byte(str))
+	if err != nil {
+		panic(err)
 	}
-	rand.Seed(time.Now().Unix())
-	randNum := rand.Intn(max-min) + min
-	return randNum
+	md5String := hex.EncodeToString(m5.Sum(nil))
+	return md5String
 }
 
 /*
