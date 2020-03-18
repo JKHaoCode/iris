@@ -10,6 +10,7 @@ import (
 	"iris/libs/redis"
 	"iris/model"
 	// "github.com/kataras/iris/sessions"
+	// "log"
 	"strconv"
 	"strings"
 )
@@ -239,7 +240,7 @@ func (r *IndexController) GetArticleBy(id uint) mvc.View {
 	}
 
 	CommentList := r.Comment.CommentSearch(id)
-
+	// log.Println(CommentList[0].CommentUnlikeCount)
 	return mvc.View{
 		Name:   "frontend/single.html",
 		Layout: "shared/layoutFront.html",
@@ -265,22 +266,42 @@ func (r *IndexController) PostComment() {
 	}
 }
 
-func (r *IndexController) PostCommentLike(ctx iris.Context) model.Comment {
+func (r *IndexController) PostCommentLike(ctx iris.Context) map[string]uint {
+	var success map[string]uint
+	success = make(map[string]uint)
 	comment := model.Comment{}
 	err := ctx.ReadJSON(&comment)
 
-	status := comment.ChangeCommentLike(comment.CommentLikeCount, comment.ID)
 	if err != nil {
 		logging.Info("comment ajax: ", err)
-		return model.Comment{}
 	}
 
-	if status {
-		return comment
+	status := comment.ChangeCommentLike(comment.CommentLikeCount, comment.ID, true)
+	if status != 0 {
+		success["result"] = status
+		success["id"] = comment.ID
 	}
 
-	return model.Comment{}
+	return success
+}
 
+func (r *IndexController) PostCommentUnLike(ctx iris.Context) map[string]uint {
+	var success map[string]uint
+	success = make(map[string]uint)
+	comment := model.Comment{}
+	err := ctx.ReadJSON(&comment)
+
+	if err != nil {
+		logging.Info("comment ajax: ", err)
+	}
+
+	status := comment.ChangeCommentLike(comment.CommentUnlikeCount, comment.ID, false)
+	if status != 0 {
+		success["result"] = status
+		success["id"] = comment.ID
+	}
+
+	return success
 }
 
 //func (c *NewsController) PostAddNews() {

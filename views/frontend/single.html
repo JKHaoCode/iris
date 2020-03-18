@@ -42,8 +42,7 @@
             <ul class="comment-list list-unstyled">
                 {{range $k, $v := .CommentList}}
                 <li class="comment-item">
-                    <span class="nickname"><a href="javascript:;" onclick="changeComment({{$v}})">赞 <i class="fa fa-thumbs-o-up"></i></a>({{$v.CommentLikeCount}})</span>
-                    {{/*<span class="nickname"><a href="javascript:;">不赞 <i class="fa fa-thumbs-down"></i></a>({{$v.CommentLikeCount}})</span>*/}}
+                    <span class="nickname"><a href="javascript:;" onclick="changeComment({{$v}})"><i class="fa fa-thumbs-o-up"></i></a>(<span id="comment{{$v.ID}}">{{$v.CommentLikeCount}}</span>)<a href="javascript:;" onclick="changeCommentReduce({{$v}})"><i class="fa fa-thumbs-o-down"></i></a>(<span id="commentReduce{{$v.ID}}">{{$v.CommentUnlikeCount}}</span>)</span>
                     <span class="nickname">
                         {{if $v.UserId}}
                             $v.UserId
@@ -63,23 +62,56 @@
 </main>
 
 <script>
+    let comment = true;
     function changeComment(comment) {
-        $.ajax({
-            type: "post",
-            contentType: "application/json;charset=UTF-8",
-            url: "/frontend/comment/like",
-            data: JSON.stringify(comment),
-            success: function(result) {
-                if (result.ID) {
-                    location.reload(true)
-                } else {
-                    alert("change error")
+        if (comment) {
+            $.ajax({
+                type: "post",
+                contentType: "application/json;charset=UTF-8",
+                url: "/frontend/comment/like",
+                data: JSON.stringify(comment),
+                success: function(result) {
+                    if (result.result) {
+                        $("#comment" + result.id).text(result.result)
+                    } else {
+                        alert("change error")
+                        return
+                    }
+                    comment = false
+                },
+                error: function(e) {
+                    console.log(e)
+                    alert(e.message)
                 }
-            },
-            error: function(e) {
-                console.log(e)
-                alert(e.message)
-            }
-        })
+            })
+        }
+    }
+
+    let commentReduce = true
+
+    function changeCommentReduce(comment) {
+        if (commentReduce) {
+            $.ajax({
+                type: "post",
+                contentType: "application/json;charset=UTF-8",
+                url: "/frontend/comment/un/like",
+                data: JSON.stringify(comment),
+                success: function(result) {
+                    if (result.result) {
+                        console.log(result)
+                        $("#commentReduce" + result.id).text(result.result)
+                    } else {
+                        alert("change error")
+                        return
+                    }
+                    commentReduce = false
+                },
+                error: function(e) {
+                    console.log(e)
+                    alert(e.message)
+                }
+            })
+        }
+
     }
 </script>

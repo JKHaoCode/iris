@@ -30,6 +30,7 @@ func UploadFile(key string, Ctx iris.Context) (bool, string) {
 	}
 	// log.Println(config.GetInt64("UploadSize"))
 	// log.Println(config.GetInt("site.AdminId"))
+	// log.Println(info)
 	var minSize int64 = 0
 	if info.Size > minSize {
 		// log.Println(config.GetInt64("UploadSize"))

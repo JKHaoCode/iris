@@ -11,14 +11,15 @@ import (
 
 type Comment struct {
 	gorm.Model
-	UserId uint `gorm:"type:int(10);DEFAULT 0;"`
-	ArticleId uint `gorm:"type:int(10); NOT NULL; DEFAULT 0;"validate:"required"`
-	CommentLikeCount uint `gorm:"type:bigint(20);DEFAULT 0;"`
-	CommentContent string `gorm:"type:text;DEFAULT '';"validate:"required"`
-	ArticleName string `gorm:"-"`
+	UserId             uint   `gorm:"type:int(10);DEFAULT 0;"`
+	ArticleId          uint   `gorm:"type:int(10); NOT NULL; DEFAULT 0;"validate:"required"`
+	CommentLikeCount   uint   `gorm:"type:bigint(20);DEFAULT 0;"`
+	CommentUnlikeCount uint   `gorm:"type:bigint(20);DEFAULT 0;"`
+	CommentContent     string `gorm:"type:text;DEFAULT '';"validate:"required"`
+	ArticleName        string `gorm:"-"`
 }
 
-func (this *Comment) List(page int) ([]Comment, int, int){
+func (this *Comment) List(page int) ([]Comment, int, int) {
 	var data = []Comment{}
 	var totalCount int
 	limit := config.GetInt("pagination.PageSize")
@@ -67,14 +68,19 @@ func (this *Comment) CommentSearch(search uint) []Comment {
 	return data
 }
 
-func (this *Comment) ChangeCommentLike(total uint, id uint) bool {
+func (this *Comment) ChangeCommentLike(total uint, id uint, change bool) uint {
 	db := libs.DB.Table("comment")
-
-	err := db.Where("id = ?", id).Update("comment_like_count", total + 1).Error
-
+	var field string
+	if change {
+		field = "comment_like_count"
+	} else {
+		field = "comment_unlike_count"
+	}
+	err := db.Where("id = ?", id).Update(field, total+1).Error
+	log.Println(field, total)
 	if err != nil {
 		logging.Info("change commentCount off: ", err)
-		return false
+		return 0
 	}
-	return true
+	return total + 1
 }
