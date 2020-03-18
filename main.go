@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/kataras/iris"
-	"iris/libs/logging"
+	// "iris/libs/logging"
 	"iris/libs/redis"
 
 	// context "github.com/kataras/iris/context"
@@ -14,7 +14,7 @@ import (
 	"iris/model"
 	"iris/route"
 	"log"
-	"strconv"
+	// "strconv"
 	"time"
 	// "os"
 	// "os/signal"
@@ -112,11 +112,9 @@ func main() {
 
 	//设置错误模版
 	app.OnAnyErrorCode(func(ctx iris.Context) {
-		_, err := ctx.HTML("<center>很抱歉！当前页面错误,错误代码:" + strconv.Itoa(ctx.GetStatusCode()) + "</center>")
-		if err != nil {
-			logging.Info("内部错误,错误代码 ", err)
-			log.Fatalf("内部错误,错误代码 %s", err)
-		}
+		ctx.ViewLayout("shared/layoutNone.html")
+		ctx.ViewData("Message", 404)
+		ctx.View("errors/404.html")
 	})
 
 	route.Routes(app)
