@@ -60,8 +60,76 @@ func UploadFile(key string, Ctx iris.Context) (bool, string) {
 			return false, "Error while uploading: <b>" + err.Error() + "</b>"
 		}
 		defer out.Close()
-		io.Copy(out, file)
+		io.Copy(out, file) // 复制
 		filePath = filePath[1:]
+	}
+	defer file.Close()
+	return true, filePath
+}
+
+func UploadFilePublic(key string, Ctx iris.Context, pathRoot string) (bool, string) {
+	file, info, err := Ctx.FormFile(key)
+	// log.Println("file info err is", file, info, err)
+	if file == nil {
+		return true, ""
+	}
+	filePath := ""
+	if err != nil {
+		logging.Info(err.Error())
+		return false, "Error while uploading: <b>" + err.Error() + "</b>"
+	}
+	// log.Println(config.GetInt64("UploadSize"))
+	// log.Println(config.GetInt("site.AdminId"))
+	// log.Println(info)
+	var minSize int64 = 0
+	if info.Size > minSize {
+		// log.Println(config.GetInt64("UploadSize"))
+		if info.Size > config.GetInt64("site.UploadSize")*1024*1024 { // author 少加了site viper 看配置
+			return false, "Error while uploading: UploadSize ToMax"
+		}
+		fname := commons.GenerateRangeNum(info.Filename) + "_" + info.Filename
+
+		fileSuffix := path.Ext(fname)
+
+		fileSuffixExists := false
+		//CanFileSuffix := [...]string{".jpg", ".png", ".jpge", ".gif"}
+		CanFileSuffix := strings.Split(config.GetString("site.UploadSuffixExists"), ",")
+		for _, v := range CanFileSuffix {
+			if v == fileSuffix {
+				fileSuffixExists = true
+			}
+		}
+
+		if fileSuffixExists == false {
+			return false, "fileSuffix error: <b>" + fileSuffix + "</b>"
+		}
+
+		filePath = pathRoot + fname
+		out, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, os.ModePerm)
+		if err != nil {
+			return false, "Error while uploading: <b>" + err.Error() + "</b>"
+		}
+		defer out.Close()
+		// io.Copy(out, file) 复制操作
+
+		bs := make([]byte, 1024, 1024)
+		n := -1
+		total := 0
+		for {
+			n, err = out.Read(bs)
+			if err == io.EOF || n == 0 {
+				break
+			} else if err != nil {
+				return false, "Error while uploading: <b>" + err.Error() + "</b>"
+			}
+
+			total += n
+			out.Write(bs[:n])
+		}
+
+		filePath = filePath[1:]
+	} else {
+		return false, "Error while uploading: <b>this file is kong</b>"
 	}
 	defer file.Close()
 	return true, filePath
