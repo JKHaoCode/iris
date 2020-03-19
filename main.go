@@ -72,6 +72,7 @@ func main() {
 	tmpl.AddFunc("TimeToDate", libs.TimeToDate) // 为html 页面增加func
 	tmpl.AddFunc("strToHtml", libs.StrToHtml)   // 为html 页面增加func 用法{{.created_at | func}}
 	tmpl.AddFunc("AddKey", libs.AddKey)
+	tmpl.AddFunc("timeNow", libs.TimeYear)
 
 	app.RegisterView(tmpl)
 	app.Favicon("./favicon.ico")

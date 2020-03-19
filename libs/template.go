@@ -18,3 +18,8 @@ func StrToHtml(content string) template.HTML {
 func AddKey(content int) int {
 	return content + 1
 }
+
+func TimeYear() string {
+	timeNow := time.Now()
+	return timeNow.Format("2006")
+}

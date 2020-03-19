@@ -213,9 +213,17 @@ func (r *IndexController) GetArticleBy(id uint) mvc.View {
 	info, err := r.News.NewsInfo(id)
 	if err != nil {
 		logging.Info(err)
+		return mvc.View{
+			Name:   "errors/404.html",
+			Layout: "shared/layoutNone.html",
+			Data: iris.Map{
+				"Title": "404",
+			},
+		}
 	}
 
-	logging.Info(info.Content)
+	// logging.Info(info.Content)
+	// log.Println(info, err)
 	CategoryIds := []string{}
 	for _, v := range strings.Split(info.Category_id, ",") {
 		_v, _ := strconv.Atoi(v)
