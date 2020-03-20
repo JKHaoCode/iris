@@ -62,9 +62,9 @@
 </main>
 
 <script>
-    let commentRe = true;
+    let commentRe = [];
     function changeComment(comment) {
-        if (commentRe) {
+        if (commentRe.indexOf(comment.ID) < 0) {
             $.ajax({
                 type: "post",
                 contentType: "application/json;charset=UTF-8",
@@ -77,7 +77,7 @@
                         alert("change error")
                         return
                     }
-                    commentRe = false
+                    commentRe.push(result.id);
                 },
                 error: function(e) {
                     console.log(e)
@@ -87,10 +87,10 @@
         }
     }
 
-    let commentReduce = true
+    let commentReduce = []
 
     function changeCommentReduce(comment) {
-        if (commentReduce) {
+        if (commentReduce.indexOf(comment.ID) < 0) {
             $.ajax({
                 type: "post",
                 contentType: "application/json;charset=UTF-8",
@@ -103,7 +103,7 @@
                         alert("change error")
                         return
                     }
-                    commentReduce = false
+                    commentReduce.push(result.id);
                 },
                 error: function(e) {
                     console.log(e)
