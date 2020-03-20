@@ -31,7 +31,7 @@
             <div class="row">
                 <input type="text" name="ArticleId" value="{{.Info.ID}}" style="display: none">
                 <div class="col-md-12">
-                    <label for="id_comment">评论：</label>
+                    <label for="id_comment">评论：</label> <p style="float: right;">最多200字</p>
                     <textarea name="CommentContent" id="id_comment" required></textarea>
                     <button type="submit" class="comment-btn">发表</button>
                 </div>
@@ -111,6 +111,17 @@
                 }
             })
         }
-
     }
+    // function changeInput() {
+    //     if ($("#id_comment").val().length > 2) {
+    //         $("#id_comment").val($("#id_comment").val().substring(0, 2));
+    //         alert('字数过多');
+    //     }
+    // }
+    $('#id_comment').bind('input', function(e) {
+        if (e.target.value.length > 200) {
+            $("#id_comment").val(e.target.value.substring(0, 200));
+            alert("字数过多")
+        }
+    })
 </script>
