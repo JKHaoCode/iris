@@ -25,6 +25,15 @@
             </div>
         </article>
     {{end}}
+    {{$leng := len .list}}
+    {{$zore := 0}}
+    {{if le $leng $zore}}
+    <div style="text-align: center">
+        <div class="antd-pro-components-exception-index-imgEle" style="background-image: url(&quot;https://gw.alipayobjects.com/zos/rmsportal/KpnpchXsobRgLElEozzI.svg&quot;);">
+        </div>
+        <p style="text-align: center;">404</p>
+    </h1>
+    {{end}}
     <!-- 简单分页效果 -->
     {{if .PageHtml}}
     <div class="pagination-simple">
@@ -65,3 +74,19 @@
         </ul>
     </div>
 </aside>
+
+<style type="text/css" media="screen">
+.antd-pro-components-exception-index-imgEle {
+    height: 360px;
+    width: 100%;
+    max-width: 430px;
+    text-align: center;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+</style>
