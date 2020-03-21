@@ -21,7 +21,7 @@ func SessionLoginAuth(Ctx context.Context) {
 		timeSession, _ := user["time"].(int64)
 		timeNow := time.Now().Unix()
 		timeDifference := timeNow - timeSession
-		var timeOld int64 = config.GetInt64("site.SessionExpires") * 3600
+		timeOld := config.GetInt64("site.SessionExpires") * 3600
 		// log.Println(timeDifference < timeOld && userModel.CheckPassword(int(admin), password))
 		if timeDifference < timeOld && userModel.CheckPassword(int(admin), password) {
 			user["time"] = timeNow
