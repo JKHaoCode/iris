@@ -5,7 +5,7 @@ import (
 	config "github.com/spf13/viper"
 	"iris/commons"
 	"iris/model"
-	"log"
+	// "log"
 	"time"
 )
 
@@ -13,7 +13,7 @@ import (
 
 func SessionLoginAuth(Ctx context.Context) {
 	auth := commons.SessManager.Start(Ctx).Get("admin_user")
-	log.Println(auth)
+	// log.Println(auth)
 	if auth != nil {
 		var userModel model.Admin
 		user, _ := auth.(map[string]interface{})
@@ -22,7 +22,7 @@ func SessionLoginAuth(Ctx context.Context) {
 		timeNow, _ := user["time"].(int64)
 		timeDifference := time.Now().Unix() - timeNow
 		var timeOld int64 = config.GetInt64("site.SessionExpires") * 3600
-		log.Println(timeDifference < timeOld && userModel.CheckPassword(int(admin), password))
+		// log.Println(timeDifference < timeOld && userModel.CheckPassword(int(admin), password))
 		if timeDifference < timeOld && userModel.CheckPassword(int(admin), password) {
 			Ctx.Next()
 			return
