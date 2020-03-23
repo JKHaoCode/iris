@@ -1,16 +1,18 @@
 package middleware
 
 import (
-	"github.com/kataras/iris/context"
+	"github.com/kataras/iris"
+	// "github.com/kataras/iris/mvc"
 	config "github.com/spf13/viper"
 	"iris/commons"
 	"iris/model"
+	"log"
 	"time"
 )
 
 // var session *sessions.Session
 
-func SessionLoginAuth(Ctx context.Context) {
+func SessionLoginAuth(Ctx iris.Context) {
 	auth := commons.SessManager.Start(Ctx).Get("admin_user")
 	// log.Println(auth)
 	if auth != nil {
@@ -36,4 +38,12 @@ func SessionLoginAuth(Ctx context.Context) {
 		Ctx.Redirect("/login")
 		return
 	}
+}
+
+func RolePermission(Ctx iris.Context) {
+	// Ctx.View("errors/404.html") 使用View 跳转
+	app := iris.New()
+	app.Party("think")
+	log.Println(app.GetRoutes())
+	Ctx.Next()
 }

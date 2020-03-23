@@ -64,7 +64,7 @@ func main() {
 		log.Fatalf("读取配置文件错误, %s", err)
 	}
 	tmpl := iris.HTML("./views", ".html").Layout(config.GetString("site.DefaultLayout"))
-	if config.GetBool("site.APPDebug") == true {
+	if config.GetBool("site.APPDebug") {
 		app.Logger().SetLevel("debug") //设置debug
 		tmpl.Reload(true)
 	}
@@ -74,6 +74,7 @@ func main() {
 	tmpl.AddFunc("AddKey", libs.AddKey)
 	tmpl.AddFunc("timeNow", libs.TimeYear)
 
+	//注册进去 注册视图
 	app.RegisterView(tmpl)
 	app.Favicon("./favicon.ico")
 	app.Use(iris.Gzip)
@@ -85,6 +86,8 @@ func main() {
 	app.Use(logger.New())
 	app.Use(libs.Cors)
 
+	//加载静态文件
+	//app.HandleDir("/static", "./static")  //把app.StaticWeb("/static", "./static")干掉  会报错 iris版本原因
 	app.StaticWeb("/public", "./public")   //设置静态文件目录
 	app.StaticWeb("/uploads", "./uploads") //设置静态文件目录
 	// 设置公共页面输出 重点

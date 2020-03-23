@@ -56,7 +56,7 @@ func Routes(app *iris.Application) {
 	// 分组
 	// 后台
 	//系统路由
-	router := app.Party("/backend", middleware.SessionLoginAuth)
+	router := app.Party("/backend", middleware.SessionLoginAuth, middleware.RolePermission)
 	mvc.New(router.Party("/system")).
 		Register(commons.SessManager.Start).
 		Handle(new(controllers.SystemController))
