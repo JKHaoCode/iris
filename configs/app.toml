@@ -16,8 +16,8 @@ UploadSize         = 5               #允许上传文件的大小 单位M
 UploadSuffixExists = ".jpg,.png,.jpge,.gif" #允许上传文件的后缀
 
 [server]
-# domain = "127.0.0.1"
-domain = "192.168.114.128"
+domain = "127.0.0.1"
+# domain = "192.168.114.128"
 port   = "8080"
 
 [pagination]
