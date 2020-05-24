@@ -1,6 +1,6 @@
 module iris
 
-go 1.13
+go 1.14
 
 require (
 	github.com/Joker/jade v1.0.0 // indirect
@@ -64,4 +64,17 @@ require (
 	gopkg.in/ini.v1 v1.52.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 	qiniupkg.com/x v7.0.8+incompatible // indirect
+)
+
+replace (
+    iris/libs => /home/hao/iris/libs
+    iris/commons => /home/hao/iris/commons
+    iris/configs => /home/hao/iris/configs
+    iris/controller => /home/hao/iris/controller
+    iris/counter => /home/hao/iris/counter
+    iris/logs => /home/hao/iris/logs
+    iris/middleware => /home/hao/iris/middleware
+    iris/model => /home/hao/iris/model
+    iris/pkg => /home/hao/iris/pkg
+    iris/route => /home/hao/iris/route
 )
