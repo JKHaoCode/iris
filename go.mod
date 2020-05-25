@@ -67,14 +67,14 @@ require (
 )
 
 replace (
-    iris/libs => /home/hao/iris/libs
-    iris/commons => /home/hao/iris/commons
-    iris/configs => /home/hao/iris/configs
-    iris/controller => /home/hao/iris/controller
-    iris/counter => /home/hao/iris/counter
-    iris/logs => /home/hao/iris/logs
-    iris/middleware => /home/hao/iris/middleware
-    iris/model => /home/hao/iris/model
-    iris/pkg => /home/hao/iris/pkg
-    iris/route => /home/hao/iris/route
+    iris/libs => /root/apps/iris/libs
+    iris/commons => /root/apps/iris/commons
+    iris/configs => /root/apps/iris/configs
+    iris/controller => /root/apps/iris/controller
+    iris/counter => /root/apps/iris/counter
+    iris/logs => /root/apps/iris/logs
+    iris/middleware => /root/apps/iris/middleware
+    iris/model => /root/apps/iris/model
+    iris/pkg => /root/apps/iris/pkg
+    iris/route => /root/apps/iris/route
 )

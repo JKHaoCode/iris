@@ -28,6 +28,11 @@
             <div class="col-md-4 col-sm-5 col-xs-8">
                 <div class="logo">
                     <h1><a href="/frontend"><b>Black</b> &amp; White</a></h1>
+                    {{if .adminInfo}}
+                    <span>{{.adminInfo.Nickname}}</span>
+                    {{else}}
+                    <span><a href="/login">登录</a></span>
+                    {{end}}
                 </div>
             </div><!-- col-md-4 -->
             <div class="col-md-8 col-sm-7 col-xs-4">
@@ -43,7 +48,6 @@
                             <li class="cl-effect-11"><a href="/frontend" data-hover="首页">首页</a></li>
                             <li class="cl-effect-11"><a href="/frontend/article" data-hover="博客">博客</a></li>
                             <li class="cl-effect-11"><a href="/frontend/about" data-hover="关于">关于</a></li>
-                            {{/*<li class="cl-effect-11"><a href="contact.html" data-hover="联系">联系</a></li>*/}}
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </nav>
@@ -96,5 +100,8 @@
 
 <script src="/public/frontend/js/script.js"></script>
 
+<script>
+    console.log({{.adminInfo}})
+</script>
 </body>
 </html>
