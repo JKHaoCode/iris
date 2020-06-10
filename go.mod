@@ -12,11 +12,10 @@ require (
 	github.com/flosch/pongo2 v0.0.0-20190707114632-bbf5a6c351f4 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gavv/monotime v0.0.0-20190418164738-30dba4353424 // indirect
-	github.com/go-playground/form v3.1.4+incompatible
-	github.com/go-playground/locales v0.13.0
-	github.com/go-playground/universal-translator v0.17.0
+	github.com/go-playground/form v3.1.4+incompatible // indirect
+	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-sql-driver/mysql v1.5.0 // indirect
-	github.com/gomodule/redigo v2.0.0+incompatible
+	github.com/gomodule/redigo v2.0.0+incompatible // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/gorilla/schema v1.1.0 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
@@ -24,13 +23,12 @@ require (
 	github.com/iris-contrib/formBinder v5.0.0+incompatible // indirect
 	github.com/iris-contrib/go.uuid v2.0.0+incompatible // indirect
 	github.com/iris-contrib/httpexpect v0.0.0-20180314041918-ebe99fcebbce // indirect
-	github.com/jinzhu/gorm v1.9.12
+	github.com/jinzhu/gorm v1.9.12 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/juju/errors v0.0.0-20190930114154-d42613fe1ab9 // indirect
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/kataras/golog v0.0.10 // indirect
-	github.com/kataras/iris v11.1.1+incompatible
-	github.com/kataras/rizla v0.1.1 // indirect
+	github.com/kataras/iris v11.1.1+incompatible // indirect
 	github.com/klauspost/compress v1.10.2 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.6 // indirect
@@ -41,7 +39,7 @@ require (
 	github.com/onsi/ginkgo v1.12.0 // indirect
 	github.com/onsi/gomega v1.9.0 // indirect
 	github.com/pelletier/go-toml v1.6.0 // indirect
-	github.com/qiniu/api.v7 v7.2.5+incompatible
+	github.com/qiniu/api.v7 v7.2.5+incompatible // indirect
 	github.com/qiniu/x v7.0.8+incompatible // indirect
 	github.com/ryanuber/columnize v2.1.0+incompatible // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
@@ -50,7 +48,7 @@ require (
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/spf13/viper v1.6.2
+	github.com/spf13/viper v1.6.2 // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
 	github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
@@ -60,21 +58,21 @@ require (
 	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b // indirect
 	golang.org/x/sys v0.0.0-20200317113312-5766fd39f98d // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
-	gopkg.in/go-playground/validator.v9 v9.31.0
+	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/ini.v1 v1.52.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 	qiniupkg.com/x v7.0.8+incompatible // indirect
 )
 
 replace (
-    iris/libs => /root/apps/iris/libs
-    iris/commons => /root/apps/iris/commons
-    iris/configs => /root/apps/iris/configs
-    iris/controller => /root/apps/iris/controller
-    iris/counter => /root/apps/iris/counter
-    iris/logs => /root/apps/iris/logs
-    iris/middleware => /root/apps/iris/middleware
-    iris/model => /root/apps/iris/model
-    iris/pkg => /root/apps/iris/pkg
-    iris/route => /root/apps/iris/route
+	iris/commons => /home/hao/goVue/iris/commons
+	iris/configs => /home/hao/goVue/iris/configs
+	iris/controller => /home/hao/goVue/iris/controller
+	iris/counter => /home/hao/goVue/iris/counter
+	iris/libs => /home/hao/goVue/iris/libs
+	iris/logs => /home/hao/goVue/iris/logs
+	iris/middleware => /home/hao/goVue/iris/middleware
+	iris/model => /home/hao/goVue/iris/model
+	iris/pkg => /home/hao/goVue/iris/pkg
+	iris/route => /home/hao/goVue/iris/route
 )
